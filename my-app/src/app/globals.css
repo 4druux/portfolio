@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: var(--font-hevaria), sans-serif;
+}
+
+:root {
+  --shine-gradient-start: currentColor;
+  --shine-gradient-middle: rgba(255, 255, 255, 0.8);
+  --shine-gradient-end: currentColor;
+}
+
+html.dark {
+  --shine-gradient-start: currentColor;
+  --shine-gradient-middle: rgba(255, 255, 255, 0.1);
+  --shine-gradient-end: currentColor;
+}
+
+.bg-gradient {
+  background: linear-gradient(135deg, #fca5a5 0%, #db2777 50%, #fde047 100%);
+  background-size: 200% 200%;
+}
+
+.dark .bg-gradient {
+  background: linear-gradient(135deg, #52525b 0%, #0369a1 50%, #1e293b 100%);
+  background-size: 200% 200%;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #fca5a5 0%, #db2777 50%, #fde047 100%);
+  background-clip: text;
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .text-gradient {
+  background: linear-gradient(135deg, #52525b 0%, #0369a1 50%, #1e293b 100%);
+  background-clip: text;
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
