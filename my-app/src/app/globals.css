@@ -10,12 +10,16 @@
   --shine-gradient-start: currentColor;
   --shine-gradient-middle: rgba(255, 255, 255, 0.8);
   --shine-gradient-end: currentColor;
+  --background: 0 0% 98%;
+  --foreground: 215 28% 17%;
 }
 
 html.dark {
   --shine-gradient-start: currentColor;
   --shine-gradient-middle: rgba(255, 255, 255, 0.1);
   --shine-gradient-end: currentColor;
+  --background: 0 0% 12%;
+  --foreground: 67 100% 98%;
 }
 
 .bg-gradient {

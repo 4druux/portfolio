@@ -23,11 +23,11 @@ export function HeroSection() {
       <motion.div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="max-w-6xl mx-auto">
           <motion.div className="mb-8">
-            <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-medium shadow-lg">
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-medium shadow-lg">
               <motion.span className="w-2 h-2 bg-green-500 rounded-full" />
               <Sparkles className="w-4 h-4" />
-              Available for work
-            </span>
+              <span className="text-foreground">Available for work</span>
+            </div>
           </motion.div>
 
           <motion.div className="space-y-6">
@@ -38,14 +38,14 @@ export function HeroSection() {
                 speed={4}
                 className="text-gray-800"
               />
-              <motion.span className="block text-gray-800 dark:text-white">
+              <motion.span className="block text-foreground">
                 Developer
               </motion.span>
             </motion.h1>
           </motion.div>
 
           <motion.div>
-            <p className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground mb-12 font-light max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl lg:text-3xl text-foreground mb-12 font-light max-w-4xl mx-auto leading-relaxed">
               I craft exceptional digital experiences that blend
               <span className="text-gradient animate-gradientText font-semibold mx-2">
                 innovative design

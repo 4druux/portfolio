@@ -5,7 +5,7 @@ import { AboutSection } from "@/components/about-section";
 
 export default function page() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
       <HeroSection />
       <AboutSection />

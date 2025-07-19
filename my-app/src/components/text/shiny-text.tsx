@@ -19,7 +19,7 @@ const ShinyText: React.FC<ShinyTextProps> = ({
     <div
       className={`
         inline-block bg-clip-text
-        text-gray-600 dark:text-gray-200 
+        text-gray-600 dark:text-neutral-200 
         ${disabled ? "" : "animate-shine"}
         ${className}
       `}
