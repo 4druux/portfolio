@@ -112,7 +112,7 @@ export function Header() {
             </motion.div>
 
             {/* Mobile-only controls */}
-            <div className="md:hidden flex items-center space-x-2">
+            <div className="md:hidden flex items-center space-x-2 transition-colors duration-0">
               <ThemeToggle />
               <button
                 className="relative z-50"
@@ -125,19 +125,19 @@ export function Header() {
                       initial={{ rotate: -90, opacity: 0 }}
                       animate={{ rotate: 0, opacity: 1 }}
                       exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <X className="h-6 w-6" />
+                      <X className="h-6 w-6 text-foreground" />
                     </motion.div>
                   ) : (
                     <motion.div
                       key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <Menu className="h-6 w-6" />
+                      <Menu className="h-6 w-6 text-foreground" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -155,7 +155,7 @@ export function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed top-[calc(20px + 80px + 1rem)] left-1/2 -translate-x-1/2 w-[90%]
+            className="md:hidden fixed top-[calc(20px + 80px + 1rem)] mt-4 left-1/2 -translate-x-1/2 w-[90%]
                        backdrop-blur-md bg-black/10 border border-black/10 dark:bg-white/10 dark:border-white/10
                        rounded-xl overflow-hidden shadow-lg p-4"
           >
@@ -168,7 +168,7 @@ export function Header() {
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ x: 10, scale: 1.02 }}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-left text-lg font-medium transition-colors py-3 px-4 rounded-lg hover:bg-white/5"
+                  className="text-left text-lg font-medium transition-colors py-3 rounded-lg hover:bg-white/5"
                 >
                   {item.label}
                 </motion.button>
@@ -179,11 +179,11 @@ export function Header() {
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: navItems.length * 0.1 }}
-                className="pt-4 px-4"
+                className="pt-4"
               >
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-full"
+                  className="w-full bg-gradient animate-gradientShift text-white font-semibold py-3 rounded-full"
                 >
                   Let&apos;s Talk
                 </button>

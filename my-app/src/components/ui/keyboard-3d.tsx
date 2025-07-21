@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { useState, useLayoutEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -14,6 +14,7 @@ import {
 import { useSpring, a } from "@react-spring/three";
 import * as THREE from "three";
 
+// useWindowSize hook tetap sama
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
   useLayoutEffect(() => {
@@ -41,6 +42,7 @@ interface TechKeyboard3DProps {
   skills: Skill[];
 }
 
+// Komponen Key tidak perlu diubah
 function Key({ skill, position, logoTexture }: KeyProps) {
   const [spring, api] = useSpring(() => ({
     y: position[1],
@@ -84,14 +86,14 @@ function Key({ skill, position, logoTexture }: KeyProps) {
   );
 }
 
+// Hapus semua logika mobile dari KeyboardScene
 function KeyboardScene({ skills }: TechKeyboard3DProps) {
   const { theme } = useTheme();
-  const [width] = useWindowSize();
 
-  const isMobile = width < 768;
-  const keysPerRow = isMobile ? 3 : 5;
-  const keySpacing = isMobile ? 1.6 : 1.5;
-  const rowSpacing = isMobile ? 1.6 : 1.5;
+  // Menghapus logika mobile, karena scene ini hanya akan tampil di desktop
+  const keysPerRow = 5;
+  const keySpacing = 1.5;
+  const rowSpacing = 1.5;
 
   const logoUrls = skills.map((skill) => skill.logoUrl);
   const textures = useTexture(logoUrls);
@@ -100,7 +102,6 @@ function KeyboardScene({ skills }: TechKeyboard3DProps) {
     <>
       <directionalLight position={[0, 0, 15]} intensity={2} />
       <ambientLight intensity={0.5} />
-
       <Environment preset="sunset" />
 
       {skills.map((skill, index) => {
@@ -120,19 +121,20 @@ function KeyboardScene({ skills }: TechKeyboard3DProps) {
       })}
 
       <ContactShadows
-        position={theme === "dark" ? [0, -0.5, 0] : [0, -0.5, 0]}
-        opacity={theme === "dark" ? 0.6 : 0.6}
+        position={[0, -0.5, 0]}
+        opacity={0.6}
         scale={10}
         blur={1}
         far={1}
         resolution={512}
-        color="#000000 dark:#fff"
+        color={theme === "dark" ? "#fff" : "#000000"}
       />
 
+      {/* Menghapus logika mobile dari OrbitControls */}
       <OrbitControls
         enableZoom={false}
         enablePan={false}
-        target={isMobile ? [0, 4, 0] : [-0.55, 1, 0]}
+        target={[-0.55, 1, 0]}
         enableRotate={false}
         minPolarAngle={Math.PI / 6}
         maxPolarAngle={Math.PI / 3}
@@ -147,10 +149,15 @@ export function TechKeyboard3D({ skills }: TechKeyboard3DProps) {
   const [width] = useWindowSize();
   const isMobile = width < 768;
 
-  const cameraPosition: [number, number, number] = isMobile
-    ? [0, 14, 3]
-    : [-4, 12, 8];
+  // ✨ Jika mobile, jangan render apapun (return null)
+  if (isMobile) {
+    return null;
+  }
 
+  // Menghapus logika mobile untuk cameraPosition
+  const cameraPosition: [number, number, number] = [-4, 12, 8];
+
+  // Kode ini hanya akan berjalan di desktop
   return (
     <div className="w-full h-[500px] lg:h-[600px] cursor-grab">
       <Canvas

@@ -25,7 +25,7 @@ function WorkflowStep({ step }: WorkflowStepProps) {
         <StepIcon className="h-12 w-12 text-foreground" />
       </div>
       <div className="bg-background p-1 text-center">
-        <h4 className="max-w-[250px] text-base font-medium text-foreground">
+        <h4 className="max-w-[250px] text-base font-medium text-foreground/80">
           {step.title}
         </h4>
       </div>

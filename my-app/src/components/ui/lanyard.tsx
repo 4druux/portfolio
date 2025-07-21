@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, extend, useFrame, ThreeEvent } from "@react-three/fiber";
 import {
@@ -21,6 +21,7 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 import { Mesh, MeshPhysicalMaterial, MeshStandardMaterial } from "three";
 import { PointerEvent as ReactPointerEvent } from "react";
+import { images } from "@/assets";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "@react-three/fiber" {
@@ -42,8 +43,7 @@ type GLTFResult = {
   };
 };
 
-const cardGLB = "/lanyard/card.glb";
-import lanyardImg from "../../../public/lanyard/lanyard.png";
+const cardGLB = "/card.glb";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -60,6 +60,19 @@ export default function Lanyard({
   fov = 20,
   transparent = true,
 }: LanyardProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 1025);
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
       <Canvas
@@ -122,7 +135,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   const card = useRef<RapierRigidBody>(null!);
 
   const { nodes, materials } = useGLTF(cardGLB) as unknown as GLTFResult;
-  const texture = useTexture(lanyardImg.src);
+  const texture = useTexture(images.lanyard.src);
 
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
@@ -149,15 +162,6 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   const dir = useMemo(() => new THREE.Vector3(), []);
   const rotEuler = useMemo(() => new THREE.Euler(), []);
   const tempQuat = useMemo(() => new THREE.Quaternion(), []);
-
-  const [isSmall, setIsSmall] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkSize = () => setIsSmall(window.innerWidth < 1024);
-    checkSize();
-    window.addEventListener("resize", checkSize);
-    return () => window.removeEventListener("resize", checkSize);
-  }, []);
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
@@ -295,7 +299,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         <meshLineMaterial
           color="white"
           depthTest={false}
-          resolution={isSmall ? [1000, 2000] : [1000, 1000]}
+          resolution={[1000, 1000]}
           useMap
           map={texture}
           repeat={[-4, 1]}

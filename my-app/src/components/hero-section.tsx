@@ -18,11 +18,11 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="min-h-screen pt-20 md:pt-10 flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen pt-24 md:pt-16 flex items-center justify-center relative overflow-hidden"
     >
-      <motion.div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <motion.div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
         <div className="max-w-6xl mx-auto">
-          <motion.div className="mb-8">
+          <motion.div className="mb-4 md:mb-8">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-medium shadow-lg">
               <motion.span className="w-2 h-2 bg-green-500 rounded-full" />
               <Sparkles className="w-4 h-4" />
@@ -30,22 +30,20 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          <motion.div className="space-y-6">
-            <motion.h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 leading-tight">
-              <ShinyText
-                text="Creative"
-                disabled={false}
-                speed={4}
-                className="text-gray-800"
-              />
-              <motion.span className="block text-foreground">
-                Developer
-              </motion.span>
-            </motion.h1>
-          </motion.div>
+          <motion.h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4 md:mb-8 leading-tight">
+            <ShinyText
+              text="Creative"
+              disabled={false}
+              speed={4}
+              className="text-gray-800"
+            />
+            <motion.span className="block text-foreground">
+              Developer
+            </motion.span>
+          </motion.h1>
 
           <motion.div>
-            <p className="text-xl sm:text-2xl lg:text-3xl text-foreground mb-12 font-light max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl lg:text-3xl text-foreground mb-4 md:mb-8 lg:mb-12 font-light md:max-w-xl xl:max-w-4xl mx-auto leading-relaxed">
               I craft exceptional digital experiences that blend
               <span className="text-gradient animate-gradientText font-semibold mx-2">
                 innovative design
@@ -54,17 +52,17 @@ export function HeroSection() {
             </p>
           </motion.div>
 
-          <motion.div className="flex flex-col sm:flex-row gap-8 justify-center w-full items-center mb-10 md:mb-20">
+          <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-8 justify-center w-full items-center mb-6 md:mb-12 lg:mb-16">
             <MagneticButton
               onClick={() => scrollToSection("contact")}
-              className="w-full md:w-1/4 py-4 md:py-5 text-lg font-semibold"
+              className="w-full md:w-1/3 lg:w-1/4 py-4 md:py-5 text-lg font-semibold"
             >
               Let&apos;s Connect
             </MagneticButton>
 
             <motion.button
               onClick={() => scrollToSection("projects")}
-              className="w-full md:w-1/4 py-4 md:py-5 flex items-center justify-center bg-gradient animate-gradientShift text-lg text-white font-semibold rounded-full group relative overflow-hidden"
+              className="w-full md:w-1/3 lg:w-1/4 py-4 md:py-5 flex items-center justify-center bg-gradient animate-gradientShift text-lg text-white font-semibold rounded-full group relative overflow-hidden"
               style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -80,7 +78,7 @@ export function HeroSection() {
             </motion.button>
           </motion.div>
 
-          <motion.div className="flex justify-center space-x-8 mb-20">
+          <motion.div className="flex justify-center space-x-8 mb-16 md:mb-20 lg:mb-24">
             {[
               { icon: FiGithub, href: "https://github.com", label: "GitHub" },
               {
@@ -101,10 +99,10 @@ export function HeroSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-5 rounded-2xl glass hover:bg-white/10"
+                className="p-4 lg:p-5 rounded-2xl glass hover:bg-white/10"
                 aria-label={label}
               >
-                <Icon className="h-6 w-6" />
+                <Icon className="w-5 h-5 lg:h-6 lg:w-6" />
               </motion.a>
             ))}
           </motion.div>

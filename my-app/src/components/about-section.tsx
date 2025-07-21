@@ -1,18 +1,34 @@
 "use client";
 
 import { Sparkles } from "lucide-react";
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import ShinyText from "./text/shiny-text";
 import { TechKeyboard3D } from "./ui/keyboard-3d";
 import Lanyard from "./ui/lanyard";
 import { Workflow } from "./ui/workflow";
 import { skills } from "@/data/about-data";
 
+const useWindowSize = () => {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+};
+
 export function AboutSection() {
   const ref = useRef(null);
+  const [width] = useWindowSize();
+  const isMobile = width < 1025;
 
   return (
-    <section ref={ref} id="about" className="py-32 relative overflow-hidden">
+    <section ref={ref} id="about" className="pt-24 xl:pt-32 relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-30" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -34,7 +50,7 @@ export function AboutSection() {
               Crafting Digital Excellence
             </h2>
 
-            <p className="text-foreground text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
+            <p className="text-foreground/80 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
               With over 5 years of experience, I transform complex ideas into
               elegant, user-centric digital solutions that drive business
               growth.
@@ -45,14 +61,14 @@ export function AboutSection() {
             <Workflow />
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid xl:grid-cols-2 xl:gap-16 items-start">
             <div className="space-y-8">
               <div className="space-y-2">
                 <h3 className="text-foreground text-2xl lg:text-3xl font-bold">
                   My Journey
                 </h3>
 
-                <div className="text-foreground space-y-2 text-base lg:text-lg leading-relaxed">
+                <div className="text-foreground/80 space-y-2 text-base lg:text-lg leading-relaxed">
                   <p>
                     I&apos;m a passionate full-stack developer who believes in
                     the power of technology to create meaningful change. My
@@ -68,11 +84,14 @@ export function AboutSection() {
               </div>
 
               <div>
-                <h3 className="text-foreground text-2xl lg:text-3xl font-bold">
-                  Technical Expertise
-                </h3>
-
-                <TechKeyboard3D skills={skills} />
+                {!isMobile && (
+                  <div>
+                    <h3 className="text-foreground text-2xl lg:text-3xl font-bold">
+                      Technical Expertise
+                    </h3>
+                    <TechKeyboard3D skills={skills} />
+                  </div>
+                )}
               </div>
             </div>
 
