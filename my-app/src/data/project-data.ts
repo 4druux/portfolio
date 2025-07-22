@@ -17,7 +17,14 @@ export const projects: Project[] = [
     description:
       "A web-based platform for buying and selling used cars, developed for PT. Mukrindo Motor. Features responsive design, intuitive search, and clean user experience.",
     imageUrl: images.mukrindo,
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    tags: [
+      "Next.js",
+      "JavaScript",
+      "Tailwind CSS",
+      "Node.js",
+      "MongoDB",
+      "Vercel",
+    ],
     liveDemoUrl: "https://mukrindo-motor.vercel.app",
   },
   {

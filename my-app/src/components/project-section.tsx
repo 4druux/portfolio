@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-// FIX: Impor tipe Transition untuk memperbaiki error #1
 import {
   motion,
   AnimatePresence,
@@ -22,6 +21,9 @@ type MarqueeItem = {
 export function ProjectSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [bounds, setBounds] = useState<DOMRect | null>(null);
+  const [cursorDirection, setCursorDirection] = useState<"top" | "bottom">(
+    "top"
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -29,6 +31,12 @@ export function ProjectSection() {
     e: React.MouseEvent<HTMLDivElement>,
     index: number
   ) => {
+    if (hoveredIndex === null && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const cursorY = e.clientY - rect.top; 
+      setCursorDirection(cursorY < rect.height / 2 ? "top" : "bottom");
+    }
+
     setHoveredIndex(index);
     if (containerRef.current) {
       const containerRect = containerRef.current.getBoundingClientRect();
@@ -41,6 +49,16 @@ export function ProjectSection() {
         height: itemRect.height,
       });
     }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const cursorY = e.clientY - rect.top;
+  
+      setCursorDirection(cursorY < rect.height / 2 ? "top" : "bottom");
+    }
+    setHoveredIndex(null); 
   };
 
   const activeProject = hoveredIndex !== null ? projects[hoveredIndex] : null;
@@ -63,10 +81,13 @@ export function ProjectSection() {
       .filter(Boolean) as MarqueeItem[];
     marqueeItems = [...ordered, ...ordered];
   }
-
   const transition: Transition = shouldReduceMotion
     ? { type: "tween", duration: 0 }
-    : { type: "spring", stiffness: 250, damping: 30, mass: 0.8 };
+    : { type: "spring", stiffness: 170, damping: 26, mass: 1 };
+
+  const clipPathFromTop = "inset(0% 0% 100% 0%)";
+  const clipPathFromBottom = "inset(100% 0% 0% 0%)";
+  const clipPathVisible = "inset(0% 0% 0% 0%)";
 
   return (
     <div>
@@ -91,16 +112,38 @@ export function ProjectSection() {
 
       <div
         ref={containerRef}
-        onMouseLeave={() => setHoveredIndex(null)}
+        onMouseLeave={handleMouseLeave}
         className="relative flex flex-col max-w-7xl mx-auto"
       >
         <AnimatePresence>
           {bounds && activeProject && (
             <motion.div
               key="hover-bg-marquee"
-              initial={{ opacity: 0, top: bounds.top, height: bounds.height }}
-              animate={{ opacity: 1, top: bounds.top, height: bounds.height }}
-              exit={{ opacity: 0 }}
+             
+              initial={{
+                opacity: 1,
+                top: bounds.top,
+                height: bounds.height,
+                clipPath:
+                  cursorDirection === "top"
+                    ? clipPathFromTop
+                    : clipPathFromBottom,
+              }}
+              animate={{
+                opacity: 1,
+                top: bounds.top,
+                height: bounds.height,
+                clipPath: clipPathVisible,
+              }}
+              exit={{
+                opacity: 1,
+                top: bounds.top,
+                height: bounds.height,
+                clipPath:
+                  cursorDirection === "top"
+                    ? clipPathFromTop
+                    : clipPathFromBottom,
+              }}
               transition={transition}
               className="absolute left-0 w-full bg-[#1a1a1a] z-20 pointer-events-none overflow-hidden flex items-center"
               style={{ position: "absolute" }}
@@ -147,8 +190,6 @@ export function ProjectSection() {
           {projects.map((project, i) => (
             <ProjectItem
               key={i}
-              // FIX: Memperbaiki cara memanggil onMouseEnter agar sesuai dengan tipenya
-              // Fungsi handleMouseEnter sudah menerima event, jadi kita teruskan saja.
               onMouseEnter={(e) => handleMouseEnter(e, i)}
               title={project.title}
               service={project.service}
