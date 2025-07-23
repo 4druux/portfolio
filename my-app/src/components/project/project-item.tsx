@@ -1,3 +1,5 @@
+// components/ProjectItem.tsx
+
 "use client";
 
 import React from "react";
@@ -16,12 +18,12 @@ export function ProjectItem({
   return (
     <div
       onMouseEnter={onMouseEnter}
-      className="relative flex justify-between items-center p-16 cursor-default"
+      className="relative flex justify-between items-center p-12 cursor-default"
     >
-      <div className="absolute top-0 left-0 w-full h-px bg-white mix-blend-difference z-30 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
 
-      <h2 className="text-5xl font-bold relative z-10 text-black">{title}</h2>
-      <p className="text-lg relative z-10 text-black">{service}</p>
+      <h2 className="text-5xl relative z-10 text-foreground">{title}</h2>
+      <p className="text-lg relative z-10 text-foreground">{service}</p>
     </div>
   );
 }

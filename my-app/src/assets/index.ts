@@ -22,12 +22,29 @@ import lanyard from "@/assets/lanyard/lanyard.png";
 
 // project
 import alltrails from "@/assets/project/alltrails.png";
+import alltrails1 from "@/assets/project/alltrails-1.jpg";
+import alltrails2 from "@/assets/project/alltrails-2.jpg";
+import alltrails3 from "@/assets/project/alltrails-3.jpg";
+
 import antika from "@/assets/project/antika.png";
+import antika1 from "@/assets/project/antika-1.jpg";
+import antika2 from "@/assets/project/antika-2.jpg";
+import antika3 from "@/assets/project/antika-3.jpg";
+
 import button from "@/assets/project/button.png";
+
 import mukrindo from "@/assets/project/mukrindo.png";
+import mukrindo1 from "@/assets/project/mukrindo-1.jpg";
+import mukrindo2 from "@/assets/project/mukrindo-2.jpg";
+import mukrindo3 from "@/assets/project/mukrindo-3.jpg";
+
 import nc from "@/assets/project/nc.png";
 import tkislam from "@/assets/project/tk.png";
+
 import ecommerce from "@/assets/project/ecom.png";
+import ecommerce1 from "@/assets/project/ecom-1.jpg";
+import ecommerce2 from "@/assets/project/ecom-2.jpg";
+import ecommerce3 from "@/assets/project/ecom-3.jpg";
 
 export const images: { [key: string]: StaticImageData } = {
   // techstack
@@ -52,10 +69,22 @@ export const images: { [key: string]: StaticImageData } = {
 
   // project
   alltrails,
+  alltrails1,
+  alltrails2,
+  alltrails3,
   antika,
+  antika1,
+  antika2,
+  antika3,
   button,
   mukrindo,
+  mukrindo1,
+  mukrindo2,
+  mukrindo3,
   nc,
   tkislam,
   ecommerce,
+  ecommerce1,
+  ecommerce2,
+  ecommerce3,
 };
