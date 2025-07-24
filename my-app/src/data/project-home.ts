@@ -107,6 +107,10 @@ export const projects = [
     imgProject: images.tkislam.src,
     textHover: ["Design", "Vercel App", "Framer Motion"],
 
-    imgHover: [images.tkislam.src, images.tkislam.src, images.tkislam.src],
+    imgHover: [
+      images.mukrindo1.src,
+      images.mukrindo1.src,
+      images.mukrindo1.src,
+    ],
   },
 ];
