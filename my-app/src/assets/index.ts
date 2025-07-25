@@ -21,30 +21,44 @@ import typescript from "@/assets/logo/typescript.svg";
 import lanyard from "@/assets/lanyard/lanyard.png";
 
 // project
-import alltrails from "@/assets/project/alltrails.png";
-import alltrails1 from "@/assets/project/alltrails-1.jpg";
-import alltrails2 from "@/assets/project/alltrails-2.jpg";
-import alltrails3 from "@/assets/project/alltrails-3.jpg";
+import alltrailsDesktop from "@/assets/project/alltrails/alltrailsDesktop.png";
+import alltrailsMobile from "@/assets/project/alltrails/alltrailsMobile.png";
+import alltrails1 from "@/assets/project/alltrails/alltrails-1.jpg";
+import alltrails2 from "@/assets/project/alltrails/alltrails-2.jpg";
+import alltrails3 from "@/assets/project/alltrails/alltrails-3.jpg";
 
-import antika from "@/assets/project/antika.png";
-import antika1 from "@/assets/project/antika-1.jpg";
-import antika2 from "@/assets/project/antika-2.jpg";
-import antika3 from "@/assets/project/antika-3.jpg";
+import antikaDesktop from "@/assets/project/antika/antikaDesktop.png";
+import antikaMobile from "@/assets/project/antika/antikaMobile.png";
+import antika1 from "@/assets/project/antika/antika-1.jpg";
+import antika2 from "@/assets/project/antika/antika-2.jpg";
+import antika3 from "@/assets/project/antika/antika-3.jpg";
 
-import button from "@/assets/project/button.png";
+import buttonDesktop from "@/assets/project/button/buttonDesktop.png";
+import buttonMobile from "@/assets/project/button/buttonMobile.png";
 
-import mukrindo from "@/assets/project/mukrindo.png";
-import mukrindo1 from "@/assets/project/mukrindo-1.jpg";
-import mukrindo2 from "@/assets/project/mukrindo-2.jpg";
-import mukrindo3 from "@/assets/project/mukrindo-3.jpg";
+import mukrindoDesktop from "@/assets/project/mukrindo/mukrindoDesktop.png";
+import mukrindoMobile from "@/assets/project/mukrindo/mukrindoMobile.png";
+import mukrindo1 from "@/assets/project/mukrindo/mukrindo-1.jpg";
+import mukrindo2 from "@/assets/project/mukrindo/mukrindo-2.jpg";
+import mukrindo3 from "@/assets/project/mukrindo/mukrindo-3.jpg";
 
-import nc from "@/assets/project/nc.png";
-import tkislam from "@/assets/project/tk.png";
+import ncDesktop from "@/assets/project/nc/ncDesktop.png";
+import ncMobile from "@/assets/project/nc/ncMobile.png";
+import nc1 from "@/assets/project/nc/nc-1.jpg";
+import nc2 from "@/assets/project/nc/nc-2.jpg";
+import nc3 from "@/assets/project/nc/nc-3.jpg";
 
-import ecommerce from "@/assets/project/ecom.png";
-import ecommerce1 from "@/assets/project/ecom-1.jpg";
-import ecommerce2 from "@/assets/project/ecom-2.jpg";
-import ecommerce3 from "@/assets/project/ecom-3.jpg";
+import tkDesktop from "@/assets/project/tk/tkDesktop.png";
+import tkMobile from "@/assets/project/tk/tkMobile.png";
+import tk1 from "@/assets/project/tk/tk-1.jpg";
+import tk2 from "@/assets/project/tk/tk-2.jpg";
+import tk3 from "@/assets/project/tk/tk-3.jpg";
+
+import ecomDesktop from "@/assets/project/ecom/ecomDesktop.png";
+import ecomMobile from "@/assets/project/ecom/ecomMobile.png";
+import ecom1 from "@/assets/project/ecom/ecom-1.jpg";
+import ecom2 from "@/assets/project/ecom/ecom-2.jpg";
+import ecom3 from "@/assets/project/ecom/ecom-3.jpg";
 
 export const images: { [key: string]: StaticImageData } = {
   // techstack
@@ -68,23 +82,42 @@ export const images: { [key: string]: StaticImageData } = {
   lanyard,
 
   // project
-  alltrails,
+  alltrailsDesktop,
+  alltrailsMobile,
   alltrails1,
   alltrails2,
   alltrails3,
-  antika,
+
+  antikaDesktop,
+  antikaMobile,
   antika1,
   antika2,
   antika3,
-  button,
-  mukrindo,
+
+  buttonDesktop,
+  buttonMobile,
+
+  mukrindoDesktop,
+  mukrindoMobile,
   mukrindo1,
   mukrindo2,
   mukrindo3,
-  nc,
-  tkislam,
-  ecommerce,
-  ecommerce1,
-  ecommerce2,
-  ecommerce3,
+
+  ncDesktop,
+  ncMobile,
+  nc1,
+  nc2,
+  nc3,
+
+  tkDesktop,
+  tkMobile,
+  tk1,
+  tk2,
+  tk3,
+
+  ecomDesktop,
+  ecomMobile,
+  ecom1,
+  ecom2,
+  ecom3,
 };

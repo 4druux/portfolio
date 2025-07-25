@@ -1,0 +1,28 @@
+.page-transition-curve {
+  .page-transition-svg,
+  .page-transition-background {
+    position: fixed;
+    height: calc(100vh + 600px);
+    width: 100vw;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    transition: z-index 0s linear 0.5s;
+  }
+
+  .page-transition-background {
+    transition: opacity 0s linear 0.1s;
+  }
+
+  .page-transition-route {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    font-weight: 500;
+    letter-spacing: 10px;
+    font-size: 32px;
+    transform: translateX(-50%);
+    text-align: center;
+    transition: z-index 0s linear 0.5s;
+  }
+}

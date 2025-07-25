@@ -12,10 +12,11 @@ import {
   useSpring,
 } from "framer-motion";
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import { ExternalLink, Sparkles } from "lucide-react";
 import ShinyText from "./text/shiny-text";
 import { ProjectItem } from "./project/project-item";
 import { projects } from "@/data/project-home";
+import Link from "next/link";
 
 type MarqueeItem = {
   type: "text" | "img";
@@ -28,6 +29,9 @@ export function ProjectSection() {
   const [cursorDirection, setCursorDirection] = useState<"top" | "bottom">(
     "top"
   );
+
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const [direction, setDirection] = useState<"left" | "right">("left");
 
   const motionX = useMotionValue(0);
   const motionY = useMotionValue(0);
@@ -48,6 +52,7 @@ export function ProjectSection() {
 
   const MAX_VELOCITY = 600;
   const MAX_TEXT_OFFSET = 10;
+  const MAX_IMAGE_OFFSET = 50;
 
   const textOffsetX = useTransform(
     velocityX,
@@ -60,16 +65,29 @@ export function ProjectSection() {
     [-MAX_TEXT_OFFSET, MAX_TEXT_OFFSET]
   );
 
-  // 2. Gunakan useSpring agar gerakan teks lebih halus (tidak kaku)
+  const imageOffsetX = useTransform(
+    velocityX,
+    [-MAX_VELOCITY, MAX_VELOCITY],
+    [-MAX_IMAGE_OFFSET, MAX_IMAGE_OFFSET]
+  );
+  const imageOffsetY = useTransform(
+    velocityY,
+    [-MAX_VELOCITY, MAX_VELOCITY],
+    [-MAX_IMAGE_OFFSET, MAX_IMAGE_OFFSET]
+  );
+
   const springConfig = { stiffness: 200, damping: 25, mass: 1 };
   const smoothTextOffsetX = useSpring(textOffsetX, springConfig);
   const smoothTextOffsetY = useSpring(textOffsetY, springConfig);
+  const smoothImageOffsetX = useSpring(imageOffsetX, springConfig);
+  const smoothImageOffsetY = useSpring(imageOffsetY, springConfig);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const [hoveredProjectImage, setHoveredProjectImage] = useState<string | null>(
-    null
-  );
+  const [hoveredProjectImage, setHoveredProjectImage] = useState<{
+    desktop: string;
+    mobile: string;
+  } | null>(null);
 
   const prevHoveredIndex = useRef<number | null>(null);
   useEffect(() => {
@@ -127,9 +145,11 @@ export function ProjectSection() {
     setHoveredProjectImage(null);
   };
 
-  const activeProject = hoveredIndex !== null ? projects?.[hoveredIndex] : null;
+  const activeProjectDesktop =
+    hoveredIndex !== null ? projects?.[hoveredIndex] : null;
+  const activeProjectMobile = projects[activeProjectIndex];
 
-  const direction =
+  const hoverDirection =
     hoveredIndex !== null &&
     prevHoveredIndex.current !== null &&
     hoveredIndex > prevHoveredIndex.current
@@ -137,8 +157,8 @@ export function ProjectSection() {
       : -1;
 
   let marqueeItems: MarqueeItem[] = [];
-  if (activeProject) {
-    const { textHover = [], imgHover = [] } = activeProject;
+  if (activeProjectDesktop) {
+    const { textHover = [], imgHover = [] } = activeProjectDesktop;
     const maxLength = Math.max(textHover.length, imgHover.length);
     const ordered = Array.from({ length: maxLength * 2 })
       .map((_, i) => {
@@ -163,26 +183,10 @@ export function ProjectSection() {
     ? { type: "tween", duration: 0 }
     : { type: "spring", stiffness: 100, damping: 20, mass: 1 };
 
-  const slideVariants = {
-    initial: (direction: number) => ({
-      y: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    animate: {
-      y: "0%",
-      opacity: 1,
-      transition: { type: "spring", stiffness: 150, damping: 20 },
-    },
-    exit: (direction: number) => ({
-      y: direction > 0 ? "-100%" : "100%",
-      opacity: 0,
-      transition: { type: "spring", stiffness: 150, damping: 20 },
-    }),
-  };
 
   return (
-    <div id="projects" className="relative">
-      <div className="text-center mb-10">
+    <div className="relative pt-24 xl:pt-32">
+      <div className="text-center mb-10 lg:mb-14 px-4 lg:px-8">
         <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-medium shadow-lg mb-4 lg:mb-8">
           <Sparkles className="w-4 h-4" />
           <ShinyText
@@ -201,149 +205,278 @@ export function ProjectSection() {
         </p>
       </div>
 
-      <div
-        ref={containerRef}
-        onMouseLeave={handleMouseLeave}
-        className="relative flex flex-col max-w-7xl mx-auto"
-      >
-        <AnimatePresence>
-          {hoveredIndex !== null && (
-            <motion.div
-              className="absolute z-50 flex items-center justify-center  w-[450px] h-[450px] pointer-events-none overflow-hidden"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
-              transition={{
-                scale: { type: "spring", stiffness: 300, damping: 25 },
-              }}
-              style={{
-                top: 0,
-                left: 0,
-                x: smoothX,
-                y: smoothY,
-                translateX: "-50%",
-                translateY: "-50%",
-              }}
-            >
-              <AnimatePresence custom={direction}>
-                <motion.div
-                  key={hoveredProjectImage}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  className="absolute inset-0"
-                >
-                  {hoveredProjectImage && (
-                    <Image
-                      src={hoveredProjectImage}
-                      alt={activeProject?.title || "Project"}
-                      fill
-                      sizes="200px"
-                      className="object-contain pt-10"
-                    />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              <div className="relative z-10 flex items-center justify-center w-20 h-20 text-sm font-bold rounded-full bg-gradient animate-gradientShift text-white">
-                <motion.span
-                  style={{
-                    x: smoothTextOffsetX,
-                    y: smoothTextOffsetY,
-                    display: "inline-block",
-                  }}
-                >
-                  View
-                </motion.span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {bounds && activeProject && (
-            <motion.div
-              key="hover-bg-marquee"
-              initial={{
-                opacity: 1,
-                top: bounds.top,
-                height: bounds.height,
-                clipPath:
-                  cursorDirection === "top"
-                    ? clipPathFromTop
-                    : clipPathFromBottom,
-              }}
-              animate={{
-                opacity: 1,
-                top: bounds.top,
-                height: bounds.height,
-                clipPath: clipPathVisible,
-              }}
-              exit={{
-                opacity: 1,
-                top: bounds.top,
-                height: bounds.height,
-                clipPath:
-                  cursorDirection === "top"
-                    ? clipPathFromTop
-                    : clipPathFromBottom,
-              }}
-              transition={transition}
-              className="absolute left-0 w-full bg-black dark:bg-white z-20 pointer-events-none overflow-hidden flex items-center"
-              style={{ position: "absolute" }}
-            >
+      <div className="hidden xl:block">
+        <div
+          ref={containerRef}
+          onMouseLeave={handleMouseLeave}
+          className="relative flex flex-col max-w-7xl mx-auto"
+        >
+          <AnimatePresence>
+            {hoveredIndex !== null && (
               <motion.div
-                className="flex gap-10 whitespace-nowrap"
-                initial={{ x: 0, opacity: 0 }}
-                animate={{ x: "-50%", opacity: 1 }}
+                className="absolute z-50 flex items-center justify-center w-[500px] h-[500px] bg-black dark:bg-white pointer-events-none overflow-hidden"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
                 transition={{
-                  opacity: { delay: 0.2, duration: 0.4 },
-                  x: {
-                    repeat: Infinity,
-                    ease: "linear",
-                    duration: 15,
-                  },
+                  scale: { type: "spring", stiffness: 300, damping: 25 },
+                }}
+                style={{
+                  top: 0,
+                  left: 0,
+                  x: smoothX,
+                  y: smoothY,
+                  translateX: "-50%",
+                  translateY: "-50%",
                 }}
               >
-                {marqueeItems.map((item, idx) =>
-                  item.type === "text" ? (
-                    <span
-                      key={`text-${idx}`}
-                      className="text-white dark:text-neutral-900 text-5xl pt-5 px-4"
-                    >
-                      {item.value}
-                    </span>
-                  ) : (
-                    <div
-                      key={`img-${idx}`}
-                      className="w-[160px] h-[80px] rounded-full overflow-hidden bg-neutral-800"
-                    >
-                      <Image
-                        src={item.value}
-                        alt={`hover-img-${idx}`}
-                        width={200}
-                        height={90}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )
-                )}
+                <AnimatePresence custom={hoverDirection}>
+                  <motion.div
+                    key={hoveredProjectImage?.desktop}
+                    custom={hoverDirection}
+                    initial={{
+                      y: hoverDirection > 0 ? "100%" : "-100%",
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: "0%",
+                      opacity: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 150,
+                        damping: 20,
+                      },
+                    }}
+                    exit={{
+                      y: hoverDirection > 0 ? "-100%" : "100%",
+                      opacity: 0,
+                      transition: {
+                        type: "spring",
+                        stiffness: 150,
+                        damping: 20,
+                      },
+                    }}
+                    className="absolute inset-0"
+                  >
+                    {hoveredProjectImage && (
+                      <motion.div
+                        className="w-full h-full"
+                        style={{
+                          x: smoothImageOffsetX,
+                          y: smoothImageOffsetY,
+                        }}
+                      >
+                        <Image
+                          src={hoveredProjectImage.desktop}
+                          alt={activeProjectDesktop?.title || "Project"}
+                          fill
+                          sizes="550px"
+                          className="object-contain p-4"
+                        />
+                      </motion.div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+                <div className="relative z-10 flex items-center justify-center w-24 h-24 text-sm font-bold rounded-full bg-gradient animate-gradientShift text-white">
+                  <motion.span
+                    style={{
+                      x: smoothTextOffsetX,
+                      y: smoothTextOffsetY,
+                      display: "inline-block",
+                    }}
+                  >
+                    View
+                  </motion.span>
+                </div>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
 
-        <div className="mb-10 relative">
-          {projects.map((project, i) => (
-            <ProjectItem
-              key={i}
-              onMouseEnter={(e) => handleMouseEnter(e, i)}
-              title={project.title}
-              service={project.service}
-            />
-          ))}
-          <div className="absolute bottom-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
+          <AnimatePresence>
+            {bounds && activeProjectDesktop && (
+              <motion.div
+                key="hover-bg-marquee"
+                initial={{
+                  opacity: 1,
+                  top: bounds.top,
+                  height: bounds.height,
+                  clipPath:
+                    cursorDirection === "top"
+                      ? clipPathFromTop
+                      : clipPathFromBottom,
+                }}
+                animate={{
+                  opacity: 1,
+                  top: bounds.top,
+                  height: bounds.height,
+                  clipPath: clipPathVisible,
+                }}
+                exit={{
+                  opacity: 1,
+                  top: bounds.top,
+                  height: bounds.height,
+                  clipPath:
+                    cursorDirection === "top"
+                      ? clipPathFromTop
+                      : clipPathFromBottom,
+                }}
+                transition={transition}
+                className="absolute left-0 w-full bg-black dark:bg-white z-20 pointer-events-none overflow-hidden flex items-center"
+                style={{ position: "absolute" }}
+              >
+                <motion.div
+                  className="flex gap-10 whitespace-nowrap"
+                  initial={{ x: 0, opacity: 0 }}
+                  animate={{ x: "-50%", opacity: 1 }}
+                  transition={{
+                    opacity: { delay: 0.2, duration: 0.4 },
+                    x: {
+                      repeat: Infinity,
+                      ease: "linear",
+                      duration: 15,
+                    },
+                  }}
+                >
+                  {marqueeItems.map((item, idx) =>
+                    item.type === "text" ? (
+                      <span
+                        key={`text-${idx}`}
+                        className="text-white dark:text-neutral-900 text-5xl pt-5 px-4"
+                      >
+                        {item.value}
+                      </span>
+                    ) : (
+                      <div
+                        key={`img-${idx}`}
+                        className="w-[160px] h-[80px] rounded-full overflow-hidden bg-neutral-800"
+                      >
+                        <Image
+                          src={item.value}
+                          alt={`hover-img-${idx}`}
+                          width={200}
+                          height={90}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="mb-10 relative">
+            {projects.map((project, i) => (
+              <ProjectItem
+                key={i}
+                onMouseEnter={(e) => handleMouseEnter(e, i)}
+                title={project.title}
+                service={project.service}
+              />
+            ))}
+            <div className="absolute bottom-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
+          </div>
+        </div>
+      </div>
+
+      <div className="xl:hidden">
+        <div className="bg-[#F2EEE7] dark:bg-[#1a1a1a] flex justify-center pt-10 relative">
+          <div className="absolute bottom-0 left-0 right-0 h-2/5 bg-gradient-to-t from-black/20 dark:from-white/10"></div>
+          <div className="relative w-full h-[40dvh] pt-10 overflow-hidden">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={activeProjectIndex}
+                custom={direction}
+                className="absolute inset-0"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(event, info) => {
+                  if (
+                    info.offset.x < -50 &&
+                    activeProjectIndex < projects.length - 1
+                  ) {
+                    setDirection("left");
+                    setActiveProjectIndex((prev) => prev + 1);
+                  } else if (info.offset.x > 50 && activeProjectIndex > 0) {
+                    setDirection("right");
+                    setActiveProjectIndex((prev) => prev - 1);
+                  }
+                }}
+                variants={{
+                  enter: (dir) => ({
+                    x: dir === "left" ? 300 : -300,
+                    opacity: 0,
+                  }),
+                  center: { x: 0, opacity: 1, transition: { duration: 0.3 } },
+                  exit: (dir) => ({
+                    x: dir === "left" ? -300 : 300,
+                    opacity: 0,
+                    transition: { duration: 0.3 },
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                style={{ touchAction: "pan-y" }}
+              >
+                <Image
+                  src={activeProjectMobile.imgProject.mobile}
+                  alt={activeProjectMobile.title}
+                  fill
+                  style={{ objectFit: "contain" }}
+                  priority={activeProjectIndex < 2}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+        <div className="bg-[#F2EEE7] dark:bg-[#1a1a1a] px-4 py-8">
+          <div className="flex justify-start items-center gap-2 mb-4">
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveProjectIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === activeProjectIndex
+                    ? "w-4 bg-black dark:bg-white"
+                    : "bg-black/30 dark:bg-white/30"
+                }`}
+              />
+            ))}
+          </div>
+          <div>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {activeProjectMobile.textHover.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h2 className="text-3xl font-bold text-foreground mb-2">
+              {activeProjectMobile.title}
+            </h2>
+            <p className="text-foreground/80 text-sm mb-2">
+              {activeProjectMobile.service}
+            </p>
+            <p className="text-foreground/80 text-xs line-clamp-5 min-h-[5rem]">
+              {activeProjectMobile.description}
+            </p>
+          </div>
+          <Link
+            href={activeProjectMobile.link || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="flex items-center gap-2 w-full justify-center bg-gradient animate-gradientShift text-white font-bold py-3 px-8 rounded-full">
+              <ExternalLink className="h-5 w-5" />
+              View
+            </button>
+          </Link>
         </div>
       </div>
     </div>

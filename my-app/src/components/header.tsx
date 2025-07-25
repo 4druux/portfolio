@@ -5,12 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Menu, X } from "lucide-react";
 import ShinyText from "./text/shiny-text";
+import { useRouter } from "next/navigation";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname =
     typeof window !== "undefined" ? window.location.pathname : "";
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,19 +22,11 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
-    }
-  };
-
   const navItems = [
-    { label: "Home", id: "hero", path: "/" },
-    { label: "About", id: "about", path: "/about" },
-    { label: "Projects", id: "projects", path: "/projects" },
-    { label: "Contact", id: "contact", path: "/contact" },
+    { label: "Home", path: "/" },
+    { label: "About", path: "/about" },
+    { label: "Projects", path: "/projects" },
+    { label: "Contact", path: "/contact" },
   ];
 
   return (
@@ -69,10 +63,13 @@ export function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <motion.button
-                key={item.id}
+                key={item.path}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => {
+                  router.push(item.path);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="relative font-medium group text-sm text-foreground"
               >
                 {(item.path === "/" && pathname === "/") ||
@@ -99,7 +96,7 @@ export function Header() {
             {/* CTA Button - Desktop */}
             <motion.div className="hidden md:block">
               <button
-                onClick={() => scrollToSection("contact")}
+                onClick={() => router.push("/contact")}
                 className="text-sm font-semibold px-6 py-3 rounded-full bg-gradient animate-gradientShift text-white"
               >
                 <motion.div
@@ -147,7 +144,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation (Separate from Main Header) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -162,19 +158,21 @@ export function Header() {
             <nav className="flex flex-col space-y-1 py-2">
               {navItems.map((item, index) => (
                 <motion.button
-                  key={item.id}
+                  key={item.path}
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ x: 10, scale: 1.02 }}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => {
+                    router.push(item.path);
+                    setIsMobileMenuOpen(false);
+                  }}
                   className="text-left text-lg font-medium transition-colors py-3 rounded-lg hover:bg-white/5"
                 >
                   {item.label}
                 </motion.button>
               ))}
 
-              {/* Mobile CTA (Theme Toggle removed from here) */}
               <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -182,7 +180,7 @@ export function Header() {
                 className="pt-4"
               >
                 <button
-                  onClick={() => scrollToSection("contact")}
+                  onClick={() => router.push("/contact")}
                   className="w-full bg-gradient animate-gradientShift text-white font-semibold py-3 rounded-full"
                 >
                   Let&apos;s Talk

@@ -28,10 +28,12 @@ export function AboutSection() {
   const isMobile = width < 1025;
 
   return (
-    <section ref={ref} id="about" className="pt-24 xl:pt-32 relative overflow-hidden">
-      <div className="absolute inset-0 grid-pattern opacity-30" />
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section
+      ref={ref}
+      id="about-section"
+      className="pt-24 xl:pt-32 relative overflow-hidden"
+    >
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 lg:mb-14">
             <div>

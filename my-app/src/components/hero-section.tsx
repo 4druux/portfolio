@@ -111,7 +111,7 @@ export function HeroSection() {
             <motion.button
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              onClick={() => scrollToSection("about")}
+              onClick={() => scrollToSection("about-section")}
               className="flex flex-col items-center space-y-3 text-muted-foreground hover:text-foreground transition-colors group mx-auto"
               aria-label="Scroll to about section"
             >
