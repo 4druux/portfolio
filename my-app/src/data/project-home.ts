@@ -7,6 +7,9 @@ export interface Project {
   imgProject: string;
   textHover: string[];
   imgHover: string[];
+  year: string;
+  description: string;
+  link: string;
 }
 
 export const projects = [
@@ -23,6 +26,7 @@ export const projects = [
       images.mukrindo2.src,
       images.mukrindo3.src,
     ],
+    year: "2025",
     description:
       "A web-based platform for buying and selling used cars, developed for PT. Mukrindo Motor. Features responsive design, intuitive search, and clean user experience.",
     link: "https://mukrindo-motor.vercel.app",
@@ -36,6 +40,7 @@ export const projects = [
     },
     textHover: ["Easy Booking", "Personalized", "High-Quality"],
     imgHover: [images.antika1.src, images.antika2.src, images.antika3.src],
+    year: "2025",
     description:
       "An e-commerce site built for a local craft brand. Offers a smooth shopping experience, dynamic product management, and secure payment integration with Stripe.",
     link: "https://antikastudio.my.id",
@@ -49,6 +54,7 @@ export const projects = [
     },
     textHover: ["Design", "Catalog", "Dashboard"],
     imgHover: [images.ecom1.src, images.ecom2.src, images.ecom3.src],
+    year: "2025",
     description:
       "A minimal dashboard for small businesses to manage products, orders, and user analytics. Prioritizes clean UI, accessibility, and ease of navigation.",
     link: "#",
@@ -66,6 +72,7 @@ export const projects = [
       images.alltrails2.src,
       images.alltrails3.src,
     ],
+    year: "2025",
     description:
       "A mobile app inspired by AllTrails, allowing outdoor lovers to find, review, and share hiking routes. Built with real-time trail data and social features.",
     link: "https://ailltrails.vercel.app",
@@ -79,6 +86,7 @@ export const projects = [
     },
     textHover: ["Healthy", "Energize", "Wellness"],
     imgHover: [images.nc1.src, images.nc2.src, images.nc3.src],
+    year: "2025",
     description:
       "A vibrant landing page for a nutrition club promoting healthy lifestyles. Highlights products, customer testimonials, and bold CTAs in a modern layout.",
     link: "https://nc-me.vercel.app",
@@ -92,6 +100,7 @@ export const projects = [
     },
     textHover: ["Creative", "Visual Craftsmanship", "Interactive"],
     imgHover: [images.antika1.src, images.ecom1.src, images.alltrails1.src],
+    year: "2025",
     description:
       "A UI concept exploring interactive hover animations for modern buttons. Inspired by Awwwards designs and focused on motion, detail, and user engagement.",
     link: "https://buttonanimations.vercel.app",
@@ -105,6 +114,7 @@ export const projects = [
     },
     textHover: ["Learn", "Discover", "Explore"],
     imgHover: [images.tk1.src, images.tk2.src, images.tk3.src],
+    year: "2025",
     description:
       "An informative school homepage that showcases the vision, academic programs and registration details. Designed with clarity, responsiveness and stakeholder engagement.",
     link: "http://tkislambukitindah.vercel.app",

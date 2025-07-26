@@ -1,5 +1,3 @@
-// "use client";
-
 import { useState, useLayoutEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useTheme } from "next-themes";
@@ -14,7 +12,6 @@ import {
 import { useSpring, a } from "@react-spring/three";
 import * as THREE from "three";
 
-// useWindowSize hook tetap sama
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
   useLayoutEffect(() => {
@@ -42,7 +39,6 @@ interface TechKeyboard3DProps {
   skills: Skill[];
 }
 
-// Komponen Key tidak perlu diubah
 function Key({ skill, position, logoTexture }: KeyProps) {
   const [spring, api] = useSpring(() => ({
     y: position[1],
@@ -86,11 +82,9 @@ function Key({ skill, position, logoTexture }: KeyProps) {
   );
 }
 
-// Hapus semua logika mobile dari KeyboardScene
 function KeyboardScene({ skills }: TechKeyboard3DProps) {
   const { theme } = useTheme();
 
-  // Menghapus logika mobile, karena scene ini hanya akan tampil di desktop
   const keysPerRow = 5;
   const keySpacing = 1.5;
   const rowSpacing = 1.5;
@@ -130,7 +124,6 @@ function KeyboardScene({ skills }: TechKeyboard3DProps) {
         color={theme === "dark" ? "#fff" : "#000000"}
       />
 
-      {/* Menghapus logika mobile dari OrbitControls */}
       <OrbitControls
         enableZoom={false}
         enablePan={false}
@@ -149,15 +142,12 @@ export function TechKeyboard3D({ skills }: TechKeyboard3DProps) {
   const [width] = useWindowSize();
   const isMobile = width < 768;
 
-  // ✨ Jika mobile, jangan render apapun (return null)
   if (isMobile) {
     return null;
   }
 
-  // Menghapus logika mobile untuk cameraPosition
   const cameraPosition: [number, number, number] = [-4, 12, 8];
 
-  // Kode ini hanya akan berjalan di desktop
   return (
     <div className="w-full h-[500px] lg:h-[600px] cursor-grab">
       <Canvas

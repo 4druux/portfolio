@@ -1,27 +1,23 @@
-import { useEffect } from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useMagnetic } from "@/hooks/use-magnetic";
 import { useTheme } from "next-themes";
 
-interface MagneticButtonProps {
-  children: React.ReactNode;
-  href?: string;
-  onClick?: () => void;
+interface SocialMediaProps {
+  href: string;
+  name?: string;
+  icon?: React.ReactNode;
   className?: string;
 }
 
-const MagneticButton = ({
-  children,
-  href,
-  onClick,
-  className,
-}: MagneticButtonProps) => {
+export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
   const fillControls = useAnimation();
   const textControls = useAnimation();
   const { theme } = useTheme();
-  const { ref, x, y, handleMouseMove, handleMouseLeave } = useMagnetic<
-    HTMLAnchorElement | HTMLButtonElement
-  >();
+  const { ref, x, y, handleMouseMove, handleMouseLeave } =
+    useMagnetic<HTMLAnchorElement>();
 
   useEffect(() => {
     const idleColor = theme === "dark" ? "#ffffff" : "#111111";
@@ -59,28 +55,28 @@ const MagneticButton = ({
     textControls.start({
       scale: 1,
       color: getIdleColor(),
-      transition: { duration: 1, ease: "easeInOut" },
+      transition: { duration: 0.8, ease: "easeInOut" },
     });
   };
 
-  const Component = href ? motion.a : motion.button;
-
   return (
-    <Component
-      ref={ref as React.Ref<HTMLAnchorElement & HTMLButtonElement>}
+    <motion.a
+      ref={ref}
       href={href}
-      onClick={onClick}
+      target="_blank"
+      rel="noopener noreferrer"
+      arial-label={`Visit my ${name} profile`}
       onMouseMove={handleMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`py-4 md:py-5 flex items-center justify-center text-lg font-semibold rounded-full group relative 
-      overflow-hidden glass ${className}`}
+      className={`p-4 lg:p-5 glass rounded-2xl relative overflow-hidden ${className}`}
       style={{
         x,
         y,
         boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
       }}
       whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 400, damping: 10 }}
     >
       <motion.span
         className="relative z-10 block"
@@ -91,18 +87,14 @@ const MagneticButton = ({
         animate={textControls}
         initial={{ color: getIdleColor() }}
       >
-        {children}
+        {icon}
       </motion.span>
 
       <motion.div
         animate={fillControls}
-        className="absolute top-[-130%] left-[-25%] w-[150%] h-[650%] rounded-[100%] pointer-events-none z-0 translate-y-[80%]
-          bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white"
+        className="absolute top-[-30%] left-[-25%] w-[150%] h-[150%] rounded-[100%] pointer-events-none z-0 translate-y-[90%]
+        bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white"
       />
-    </Component>
+    </motion.a>
   );
-};
-
-MagneticButton.displayName = "MagneticButton";
-
-export default MagneticButton;
+}
