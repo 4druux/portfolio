@@ -3,9 +3,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, AnimatePresence } from "framer-motion";
-import { projects } from "@/data/project-data";
+import { projects } from "@/data/project-home";
 import { ExternalLink, Sparkles } from "lucide-react";
 import ShinyText from "./text/shiny-text";
+import Link from "next/link";
 
 export const ProjectSection = () => {
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
@@ -81,7 +82,7 @@ export const ProjectSection = () => {
             <div className="w-1/4 flex flex-col items-start justify-center gap-2 pl-12">
               {projects.map((project, index) => (
                 <div
-                  key={project.navigation + index}
+                  key={project.link + index}
                   className="relative w-fit cursor-default"
                 >
                   <h2
@@ -91,7 +92,7 @@ export const ProjectSection = () => {
                       transition: "opacity 0.3s",
                     }}
                   >
-                    {project.navigation}
+                    {project.link}
                   </h2>
 
                   <div className="absolute bottom-[1px] left-0 w-full h-[2px] overflow-hidden">
@@ -119,7 +120,7 @@ export const ProjectSection = () => {
             </div>
 
             <motion.a
-              href={activeProject.liveDemoUrl}
+              href={activeProject.link}
               target="_blank"
               rel="noopener noreferrer"
               className="w-1/2 h-full relative"
@@ -142,7 +143,7 @@ export const ProjectSection = () => {
             >
               <AnimatePresence>
                 <motion.div
-                  key={activeProject.imageUrl.toString() + activeProjectIndex}
+                  key={activeProject.imgProject.toString() + activeProjectIndex}
                   className="absolute inset-0 flex h-full w-full items-center justify-center"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -150,8 +151,8 @@ export const ProjectSection = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <Image
-                    src={activeProject.imageUrl}
-                    alt={activeProject.navigation}
+                    src={activeProject.imgProject}
+                    alt={activeProject.link}
                     fill
                     style={{ objectFit: "contain" }}
                     className="pt-24 pr-6"
@@ -228,16 +229,6 @@ export const ProjectSection = () => {
                   <p className="text-base text-foreground/70 leading-relaxed">
                     {activeProject.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {activeProject.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -287,8 +278,8 @@ export const ProjectSection = () => {
                 style={{ touchAction: "pan-y" }}
               >
                 <Image
-                  src={activeProjectMobile.imgProject.mobile}
-                  alt={activeProjectMobile.title}
+                  src={activeProject.imgProject.mobile}
+                  alt={activeProject.title}
                   fill
                   style={{ objectFit: "contain" }}
                   priority={activeProjectIndex < 2}
@@ -315,7 +306,7 @@ export const ProjectSection = () => {
           </div>
           <div>
             <div className="flex flex-wrap gap-2 mb-2">
-              {activeProjectMobile.textHover.map((tag) => (
+              {activeProject.textHover.map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
@@ -325,17 +316,17 @@ export const ProjectSection = () => {
               ))}
             </div>
             <h2 className="text-3xl font-bold text-foreground mb-2">
-              {activeProjectMobile.title}
+              {activeProject.title}
             </h2>
             <p className="text-foreground/80 text-sm mb-2">
-              {activeProjectMobile.service}
+              {activeProject.service}
             </p>
             <p className="text-foreground/80 text-xs line-clamp-5 min-h-[5rem]">
-              {activeProjectMobile.description}
+              {activeProject.description}
             </p>
           </div>
           <Link
-            href={activeProjectMobile.link || "#"}
+            href={activeProject.link || "#"}
             target="_blank"
             rel="noopener noreferrer"
           >

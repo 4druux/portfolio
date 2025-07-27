@@ -96,7 +96,7 @@ const MagneticButton = ({
 
       <motion.div
         animate={fillControls}
-        className="absolute top-[-130%] left-[-25%] w-[150%] h-[650%] rounded-[100%] pointer-events-none z-0 translate-y-[80%]
+        className="absolute top-[-140%] left-[-25%] w-[150%] h-[650%] rounded-[100%] pointer-events-none z-0 translate-y-[80%]
           bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white"
       />
     </Component>

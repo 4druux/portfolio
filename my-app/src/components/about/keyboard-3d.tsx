@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, Suspense } from "react";
+import { useState, useLayoutEffect, Suspense, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useTheme } from "next-themes";
 import {
@@ -9,8 +9,11 @@ import {
   Environment,
   ContactShadows,
 } from "@react-three/drei";
-import { useSpring, a } from "@react-spring/three";
+import { useSpring as useReactSpring, a } from "@react-spring/three";
 import * as THREE from "three";
+import { useCursorFollow } from "@/hooks/use-cursor-follow";
+import { AnimatePresence, motion, useSpring } from "framer-motion";
+import { CursorFollow } from "../ui/cursor-follow";
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -34,19 +37,25 @@ interface KeyProps {
   skill: Skill;
   position: [number, number, number];
   logoTexture: THREE.Texture;
+  setHoveredSkill: (name: string | null) => void;
 }
 interface TechKeyboard3DProps {
   skills: Skill[];
 }
 
-function Key({ skill, position, logoTexture }: KeyProps) {
-  const [spring, api] = useSpring(() => ({
+function Key({ skill, position, logoTexture, setHoveredSkill }: KeyProps) {
+  const [spring, api] = useReactSpring(() => ({
     y: position[1],
     config: { mass: 1, tension: 200, friction: 20 },
   }));
 
-  const handlePointerOver = () => api.start({ y: position[1] - 0.15 });
-  const handlePointerOut = () => api.start({ y: position[1] });
+  const handlePointerOver = () => {
+    api.start({ y: position[1] - 0.15 });
+    setHoveredSkill(skill.name);
+  };
+  const handlePointerOut = () => {
+    api.start({ y: position[1] });
+  };
 
   return (
     <a.group position={position} position-y={spring.y}>
@@ -82,7 +91,10 @@ function Key({ skill, position, logoTexture }: KeyProps) {
   );
 }
 
-function KeyboardScene({ skills }: TechKeyboard3DProps) {
+function KeyboardScene({
+  skills,
+  setHoveredSkill,
+}: TechKeyboard3DProps & { setHoveredSkill: (name: string | null) => void }) {
   const { theme } = useTheme();
 
   const keysPerRow = 5;
@@ -110,6 +122,7 @@ function KeyboardScene({ skills }: TechKeyboard3DProps) {
             skill={skill}
             position={[x, 0, z]}
             logoTexture={textures[index]}
+            setHoveredSkill={setHoveredSkill}
           />
         );
       })}
@@ -141,6 +154,20 @@ function KeyboardScene({ skills }: TechKeyboard3DProps) {
 export function TechKeyboard3D({ skills }: TechKeyboard3DProps) {
   const [width] = useWindowSize();
   const isMobile = width < 768;
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const containerRef = useRef(null);
+  const { mouseX, mouseY } = useCursorFollow(containerRef);
+
+  const smoothX = useSpring(mouseX, {
+    stiffness: 300,
+    damping: 25,
+    mass: 0.5,
+  });
+  const smoothY = useSpring(mouseY, {
+    stiffness: 300,
+    damping: 25,
+    mass: 0.5,
+  });
 
   if (isMobile) {
     return null;
@@ -149,14 +176,39 @@ export function TechKeyboard3D({ skills }: TechKeyboard3DProps) {
   const cameraPosition: [number, number, number] = [-4, 12, 8];
 
   return (
-    <div className="w-full h-[500px] lg:h-[600px] cursor-grab">
+    <div
+      ref={containerRef}
+      className="relative w-full h-[500px] lg:h-[600px] cursor-grab"
+      onMouseLeave={() => setHoveredSkill(null)}
+    >
+      <AnimatePresence>
+        {hoveredSkill && (
+          <motion.div
+            className="absolute pointer-events-none z-10"
+            style={{
+              x: smoothX,
+              y: smoothY,
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{
+              scale: { type: "spring", stiffness: 300, damping: 20 },
+            }}
+          >
+            <CursorFollow text={hoveredSkill} mouseX={mouseX} mouseY={mouseY} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <Canvas
         shadows
         dpr={[1, 2]}
         camera={{ position: cameraPosition, fov: 30 }}
       >
         <Suspense fallback={null}>
-          <KeyboardScene skills={skills} />
+          <KeyboardScene skills={skills} setHoveredSkill={setHoveredSkill} />
         </Suspense>
       </Canvas>
     </div>

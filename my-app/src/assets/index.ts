@@ -20,47 +20,15 @@ import typescript from "@/assets/logo/typescript.svg";
 // lanyard
 import lanyard from "@/assets/lanyard/lanyard.png";
 
-// project
-import alltrailsDesktop from "@/assets/project/alltrails/alltrailsDesktop.png";
-import alltrailsMobile from "@/assets/project/alltrails/alltrailsMobile.png";
-import alltrails1 from "@/assets/project/alltrails/alltrails-1.jpg";
-import alltrails2 from "@/assets/project/alltrails/alltrails-2.jpg";
-import alltrails3 from "@/assets/project/alltrails/alltrails-3.jpg";
+type ImageType = StaticImageData | string;
+export const getImageUrl = (image: ImageType): string => {
+  if (typeof image === "string") {
+    return image;
+  }
+  return image.src;
+};
 
-import antikaDesktop from "@/assets/project/antika/antikaDesktop.png";
-import antikaMobile from "@/assets/project/antika/antikaMobile.png";
-import antika1 from "@/assets/project/antika/antika-1.jpg";
-import antika2 from "@/assets/project/antika/antika-2.jpg";
-import antika3 from "@/assets/project/antika/antika-3.jpg";
-
-import buttonDesktop from "@/assets/project/button/buttonDesktop.png";
-import buttonMobile from "@/assets/project/button/buttonMobile.png";
-
-import mukrindoDesktop from "@/assets/project/mukrindo/mukrindoDesktop.png";
-import mukrindoMobile from "@/assets/project/mukrindo/mukrindoMobile.png";
-import mukrindo1 from "@/assets/project/mukrindo/mukrindo-1.jpg";
-import mukrindo2 from "@/assets/project/mukrindo/mukrindo-2.jpg";
-import mukrindo3 from "@/assets/project/mukrindo/mukrindo-3.jpg";
-
-import ncDesktop from "@/assets/project/nc/ncDesktop.png";
-import ncMobile from "@/assets/project/nc/ncMobile.png";
-import nc1 from "@/assets/project/nc/nc-1.jpg";
-import nc2 from "@/assets/project/nc/nc-2.jpg";
-import nc3 from "@/assets/project/nc/nc-3.jpg";
-
-import tkDesktop from "@/assets/project/tk/tkDesktop.png";
-import tkMobile from "@/assets/project/tk/tkMobile.png";
-import tk1 from "@/assets/project/tk/tk-1.jpg";
-import tk2 from "@/assets/project/tk/tk-2.jpg";
-import tk3 from "@/assets/project/tk/tk-3.jpg";
-
-import ecomDesktop from "@/assets/project/ecom/ecomDesktop.png";
-import ecomMobile from "@/assets/project/ecom/ecomMobile.png";
-import ecom1 from "@/assets/project/ecom/ecom-1.jpg";
-import ecom2 from "@/assets/project/ecom/ecom-2.jpg";
-import ecom3 from "@/assets/project/ecom/ecom-3.jpg";
-
-export const images: { [key: string]: StaticImageData } = {
+export const images: { [key: string]: ImageType } = {
   // techstack
   css,
   express,
@@ -82,42 +50,68 @@ export const images: { [key: string]: StaticImageData } = {
   lanyard,
 
   // project
-  alltrailsDesktop,
-  alltrailsMobile,
-  alltrails1,
-  alltrails2,
-  alltrails3,
+  alltrailsDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626567/alltrailsDesktop_dzo2sf.png",
+  alltrailsMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626567/alltrailsMobile_n2cuk7.png",
+  alltrails1:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626550/alltrails-3_u7mo6i.jpg",
+  alltrails2:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626629/alltrails-2_dsuvrj.jpg",
+  alltrails3:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626550/alltrails-1_y7suej.jpg",
 
-  antikaDesktop,
-  antikaMobile,
-  antika1,
-  antika2,
-  antika3,
+  antikaDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626650/antikaDesktop_cjfx9q.png",
+  antikaMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626660/antikaMobile_a3z4y3.png",
+  antika1:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626709/antika-3_qp3dbu.jpg",
+  antika2:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626673/antika-2_ymtvht.jpg",
+  antika3:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626647/antika-1_tfhbki.jpg",
 
-  buttonDesktop,
-  buttonMobile,
+  buttonDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626640/buttonDesktop_bcm2xm.png",
+  buttonMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626643/buttonMobile_x2z6vc.png",
 
-  mukrindoDesktop,
-  mukrindoMobile,
-  mukrindo1,
-  mukrindo2,
-  mukrindo3,
+  ecomDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626516/ecomDesktop_cxefb0.png",
+  ecomMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626539/ecomMobile_fgjket.png",
+  ecom1:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626536/ecom-2_dr0eop.jpg",
+  ecom2:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626529/ecom-3_qpd4qu.jpg",
+  ecom3:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626521/ecom-1_wb9osx.jpg",
 
-  ncDesktop,
-  ncMobile,
-  nc1,
-  nc2,
-  nc3,
+  mukrindoDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626445/mukrindoDesktop_nzjttv.png",
+  mukrindoMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626446/mukrindoMobile_tfxdnz.png",
+  mukrindo1:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626512/mukrindo-3_xtonom.jpg",
+  mukrindo2:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626471/mukrindo-2_rixuew.jpg",
+  mukrindo3:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626440/mukrindo-1_nvxrqk.jpg",
 
-  tkDesktop,
-  tkMobile,
-  tk1,
-  tk2,
-  tk3,
+  ncDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626341/ncDesktop_ispar1.png",
+  ncMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626309/ncMobile_bc6a2g.png",
+  nc1: "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626318/nc-2_hjibai.jpg",
+  nc2: "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626303/nc-3_dn8unr.jpg",
+  nc3: "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626318/nc-1_bnkyqw.jpg",
 
-  ecomDesktop,
-  ecomMobile,
-  ecom1,
-  ecom2,
-  ecom3,
+  tkDesktop:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753625739/tkDesktop_sherpe.png",
+  tkMobile:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753625739/tkMobile_wl8wzw.png",
+  tk1: "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626068/tk-3_qk4frx.jpg",
+  tk2: "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626088/tk-2_tl2f0j.jpg",
+  tk3: "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626065/tk-1_rayzxs.jpg",
 };

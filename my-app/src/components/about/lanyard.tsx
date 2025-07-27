@@ -21,7 +21,7 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 import { Mesh, MeshPhysicalMaterial, MeshStandardMaterial } from "three";
 import { PointerEvent as ReactPointerEvent } from "react";
-import { images } from "@/assets";
+import { getImageUrl, images } from "@/assets";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "@react-three/fiber" {
@@ -135,7 +135,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   const card = useRef<RapierRigidBody>(null!);
 
   const { nodes, materials } = useGLTF(cardGLB) as unknown as GLTFResult;
-  const texture = useTexture(images.lanyard.src);
+  const texture = useTexture(getImageUrl(images.lanyard));
 
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);

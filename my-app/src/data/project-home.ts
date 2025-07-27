@@ -1,10 +1,14 @@
 // data/projects.ts
-import { images } from "@/assets";
+import { getImageUrl, images } from "@/assets";
 
 export interface Project {
+  slug: string;
   title: string;
   service: string;
-  imgProject: string;
+  imgProject: {
+    desktop: string;
+    mobile: string;
+  };
   textHover: string[];
   imgHover: string[];
   year: string;
@@ -14,17 +18,18 @@ export interface Project {
 
 export const projects = [
   {
+    slug: "mukrindo-motor",
     title: "Mukrindo Motor",
     service: "Full Stack Development",
     imgProject: {
-      desktop: images.mukrindoDesktop.src,
-      mobile: images.mukrindoMobile.src,
+      desktop: getImageUrl(images.mukrindoDesktop),
+      mobile: getImageUrl(images.mukrindoMobile),
     },
     textHover: ["Scalable", "User-Friendly", "Dashboard"],
     imgHover: [
-      images.mukrindo1.src,
-      images.mukrindo2.src,
-      images.mukrindo3.src,
+      getImageUrl(images.mukrindo1),
+      getImageUrl(images.mukrindo2),
+      getImageUrl(images.mukrindo3),
     ],
     year: "2025",
     description:
@@ -32,45 +37,56 @@ export const projects = [
     link: "https://mukrindo-motor.vercel.app",
   },
   {
+    slug: "antika-studio",
     title: "Antika Studio",
     service: "Full Stack Development",
     imgProject: {
-      desktop: images.antikaDesktop.src,
-      mobile: images.antikaMobile.src,
+      desktop: getImageUrl(images.antikaDesktop),
+      mobile: getImageUrl(images.antikaMobile),
     },
     textHover: ["Easy Booking", "Personalized", "High-Quality"],
-    imgHover: [images.antika1.src, images.antika2.src, images.antika3.src],
+    imgHover: [
+      getImageUrl(images.antika1),
+      getImageUrl(images.antika2),
+      getImageUrl(images.antika3),
+    ],
     year: "2025",
     description:
       "An e-commerce site built for a local craft brand. Offers a smooth shopping experience, dynamic product management, and secure payment integration with Stripe.",
     link: "https://antikastudio.my.id",
   },
   {
+    slug: "ecommerce",
     title: "E-commerce",
     service: "Full Stack Development",
     imgProject: {
-      desktop: images.ecomDesktop.src,
-      mobile: images.ecomMobile.src,
+      desktop: getImageUrl(images.ecomDesktop),
+      mobile: getImageUrl(images.ecomMobile),
     },
     textHover: ["Design", "Catalog", "Dashboard"],
-    imgHover: [images.ecom1.src, images.ecom2.src, images.ecom3.src],
+    imgHover: [
+      getImageUrl(images.ecom1),
+      getImageUrl(images.ecom2),
+      getImageUrl(images.ecom3),
+    ],
     year: "2025",
     description:
       "A minimal dashboard for small businesses to manage products, orders, and user analytics. Prioritizes clean UI, accessibility, and ease of navigation.",
     link: "#",
   },
   {
+    slug: "alltrails",
     title: "Clone Alltrails",
     service: "Design & Development",
     imgProject: {
-      desktop: images.alltrailsDesktop.src,
-      mobile: images.alltrailsMobile.src,
+      desktop: getImageUrl(images.alltrailsDesktop),
+      mobile: getImageUrl(images.alltrailsMobile),
     },
     textHover: ["Visual", "Responsive", "Interactive"],
     imgHover: [
-      images.alltrails1.src,
-      images.alltrails2.src,
-      images.alltrails3.src,
+      getImageUrl(images.alltrails1),
+      getImageUrl(images.alltrails2),
+      getImageUrl(images.alltrails3),
     ],
     year: "2025",
     description:
@@ -78,42 +94,57 @@ export const projects = [
     link: "https://ailltrails.vercel.app",
   },
   {
+    slug: "nutrition-club",
     title: "Nutrition Club",
     service: "Design & Development",
     imgProject: {
-      desktop: images.ncDesktop.src,
-      mobile: images.ncMobile.src,
+      desktop: getImageUrl(images.ncDesktop),
+      mobile: getImageUrl(images.ncMobile),
     },
     textHover: ["Healthy", "Energize", "Wellness"],
-    imgHover: [images.nc1.src, images.nc2.src, images.nc3.src],
+    imgHover: [
+      getImageUrl(images.nc1),
+      getImageUrl(images.nc2),
+      getImageUrl(images.nc3),
+    ],
     year: "2025",
     description:
       "A vibrant landing page for a nutrition club promoting healthy lifestyles. Highlights products, customer testimonials, and bold CTAs in a modern layout.",
     link: "https://nc-me.vercel.app",
   },
   {
+    slug: "button-animation",
     title: "Button Animation",
     service: "Design & Development",
     imgProject: {
-      desktop: images.buttonDesktop.src,
-      mobile: images.buttonMobile.src,
+      desktop: getImageUrl(images.buttonDesktop),
+      mobile: getImageUrl(images.buttonMobile),
     },
     textHover: ["Creative", "Visual Craftsmanship", "Interactive"],
-    imgHover: [images.antika1.src, images.ecom1.src, images.alltrails1.src],
+    imgHover: [
+      getImageUrl(images.antika1),
+      getImageUrl(images.ecom1),
+      getImageUrl(images.alltrails1),
+    ],
     year: "2025",
     description:
       "A UI concept exploring interactive hover animations for modern buttons. Inspired by Awwwards designs and focused on motion, detail, and user engagement.",
     link: "https://buttonanimations.vercel.app",
   },
   {
+    slug: "school-landing-page",
     title: "School Landing Page",
     service: "Design & Development",
     imgProject: {
-      desktop: images.tkDesktop.src,
-      mobile: images.tkMobile.src,
+      desktop: getImageUrl(images.tkDesktop),
+      mobile: getImageUrl(images.tkMobile),
     },
     textHover: ["Learn", "Discover", "Explore"],
-    imgHover: [images.tk1.src, images.tk2.src, images.tk3.src],
+    imgHover: [
+      getImageUrl(images.tk1),
+      getImageUrl(images.tk2),
+      getImageUrl(images.tk3),
+    ],
     year: "2025",
     description:
       "An informative school homepage that showcases the vision, academic programs and registration details. Designed with clarity, responsiveness and stakeholder engagement.",
