@@ -11,7 +11,7 @@ interface ProjectMobileProps {
 
 export function ProjectMobile({ projects }: ProjectMobileProps) {
   return (
-    <div className="flex flex-col space-y-4 px-4">
+    <div className="flex flex-col space-y-8 px-4">
       {projects.map((project, index) => (
         <div key={index} className="overflow-hidden">
           <div className="bg-[#F2EEE7] dark:bg-[#1a1a1a] flex justify-center pt-10 relative rounded-t-2xl">

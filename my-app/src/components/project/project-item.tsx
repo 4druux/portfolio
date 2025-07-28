@@ -20,8 +20,8 @@ export function ProjectItem({
     >
       <div className="absolute top-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
 
-      <h2 className="text-5xl relative z-10 text-foreground">{title}</h2>
-      <p className="text-lg relative z-10 text-foreground">{service}</p>
+      <h2 className="text-4xl xl:text-5xl relative z-10 text-foreground">{title}</h2>
+      <p className="text-md xl:text-lg relative z-10 text-foreground">{service}</p>
     </div>
   );
 }

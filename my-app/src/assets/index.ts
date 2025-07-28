@@ -16,6 +16,7 @@ import react from "@/assets/logo/react.svg";
 import sass from "@/assets/logo/sass.svg";
 import tailwind from "@/assets/logo/tailwindcss.svg";
 import typescript from "@/assets/logo/typescript.svg";
+import mysql from "@/assets/logo/mysql.svg";
 
 // lanyard
 import lanyard from "@/assets/lanyard/lanyard.png";
@@ -45,6 +46,7 @@ export const images: { [key: string]: ImageType } = {
   sass,
   tailwind,
   typescript,
+  mysql,
 
   // lanyard
   lanyard,

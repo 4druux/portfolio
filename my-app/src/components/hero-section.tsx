@@ -2,13 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { MousePointer2 } from "lucide-react";
+import { ArrowDown, MousePointer2 } from "lucide-react";
 import ShinyText from "./text/shiny-text";
 import MagneticButton from "./button/magnetic-button";
 import { GradientButton } from "./button/gradient-button";
-import { SocialMedia } from "./button/social-media";
 import { socialLinks } from "@/data/social-media-data";
 import { Badge } from "./ui/bedge";
+import { IconMagnetic } from "./ui/icon-magnetic";
 
 export function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -21,7 +21,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden py-24 xl:py-32"
     >
       <motion.div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
         <div className="max-w-6xl mx-auto">
@@ -58,7 +58,7 @@ export function HeroSection() {
             </MagneticButton>
 
             <GradientButton
-              onClick={() => scrollToSection("projects")}
+              onClick={() => scrollToSection("projects-section")}
               className="w-full md:w-1/3 lg:w-1/4"
               icon={<MousePointer2 />}
             >
@@ -66,15 +66,36 @@ export function HeroSection() {
             </GradientButton>
           </motion.div>
 
-          <motion.div className="flex justify-center space-x-8">
+          <motion.div className="flex justify-center space-x-8 mb-12">
             {socialLinks.map((social) => (
-              <SocialMedia
+              <IconMagnetic
                 key={social.name}
-                href={social.href}
+                onClick={() =>
+                  window.open(social.link, "_blank", "noopener,noreferrer")
+                }
                 name={social.name}
                 icon={<social.icon className="w-6 h-6" />}
               />
             ))}
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col items-center cursor-pointer w-fit mx-auto"
+            animate={{ y: [0, -15, 0] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <div className="flex flex-col items-center space-y-3">
+              <span className="text-sm font-medium">Scroll to explore</span>
+              <IconMagnetic
+                onClick={() => scrollToSection("about-section")}
+                icon={<ArrowDown className="w-5 h-5" />}
+                className="!p-3 rounded-full"
+              />
+            </div>
           </motion.div>
         </div>
       </motion.div>

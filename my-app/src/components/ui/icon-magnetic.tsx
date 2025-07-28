@@ -5,23 +5,27 @@ import { motion, useAnimation } from "framer-motion";
 import { useMagnetic } from "@/hooks/use-magnetic";
 import { useTheme } from "next-themes";
 
-interface SocialMediaProps {
-  href: string;
+interface IconMagneticProps {
+  onClick: () => void;
   name?: string;
   icon?: React.ReactNode;
   className?: string;
 }
 
-export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
+export function IconMagnetic({
+  onClick,
+  name,
+  icon,
+  className,
+}: IconMagneticProps) {
   const fillControls = useAnimation();
   const textControls = useAnimation();
   const { theme } = useTheme();
   const { ref, x, y, handleMouseMove, handleMouseLeave } =
-    useMagnetic<HTMLAnchorElement>();
+    useMagnetic<HTMLButtonElement>();
 
   useEffect(() => {
     const idleColor = theme === "dark" ? "#ffffff" : "#111111";
-
     textControls.start({
       color: idleColor,
       transition: { duration: 0.1, ease: "easeInOut" },
@@ -36,7 +40,6 @@ export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
       y: ["80%", "-10%"],
       transition: { ease: [0.19, 1, 0.22, 1], duration: 2 },
     });
-
     textControls.start({
       scale: 1.05,
       color: getHoverColor(),
@@ -46,12 +49,10 @@ export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
 
   const onMouseLeave = () => {
     handleMouseLeave();
-
     fillControls.start({
       y: "-80%",
       transition: { ease: [0.19, 1, 0.22, 1], duration: 2 },
     });
-
     textControls.start({
       scale: 1,
       color: getIdleColor(),
@@ -60,12 +61,10 @@ export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
   };
 
   return (
-    <motion.a
+    <motion.button
       ref={ref}
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      arial-label={`Visit my ${name} profile`}
+      onClick={onClick}
+      aria-label={`Action for ${name}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -80,10 +79,7 @@ export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
     >
       <motion.span
         className="relative z-10 block"
-        style={{
-          x,
-          y,
-        }}
+        style={{ x, y }}
         animate={textControls}
         initial={{ color: getIdleColor() }}
       >
@@ -95,6 +91,6 @@ export function SocialMedia({ href, name, icon, className }: SocialMediaProps) {
         className="absolute top-[-30%] left-[-25%] w-[150%] h-[150%] rounded-[100%] pointer-events-none z-0 translate-y-[90%]
         bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white"
       />
-    </motion.a>
+    </motion.button>
   );
 }

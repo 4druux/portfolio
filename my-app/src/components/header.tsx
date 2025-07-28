@@ -37,7 +37,7 @@ export function Header() {
       className={`fixed top-0 w-full z-50 px-4 transition-all duration-500`}
     >
       <div
-        className={`container mx-auto px-4 sm:px-6 lg:px-8  rounded-full mt-4 transition-all duration-500
+        className={`container mx-auto px-4 sm:px-6 lg:px-8 rounded-full mt-4 transition-all duration-500
           ${
             isScrolled
               ? "bg-black/10 shadow-md backdrop-blur-md dark:bg-white/10 md:w-[750px] md:py-0"

@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, Suspense, useRef } from "react";
+import { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useTheme } from "next-themes";
 import {
@@ -15,19 +15,6 @@ import { useCursorFollow } from "@/hooks/use-cursor-follow";
 import { AnimatePresence, motion, useSpring } from "framer-motion";
 import { CursorFollow } from "../ui/cursor-follow";
 
-const useWindowSize = () => {
-  const [size, setSize] = useState([0, 0]);
-  useLayoutEffect(() => {
-    function updateSize() {
-      setSize([window.innerWidth, window.innerHeight]);
-    }
-    window.addEventListener("resize", updateSize);
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-  return size;
-};
-
 interface Skill {
   name: string;
   logoUrl: string;
@@ -37,35 +24,45 @@ interface KeyProps {
   skill: Skill;
   position: [number, number, number];
   logoTexture: THREE.Texture;
-  setHoveredSkill: (name: string | null) => void;
+  activeKey: string | null;
+  setActiveKey: (name: string | null) => void;
 }
 interface TechKeyboard3DProps {
   skills: Skill[];
 }
 
-function Key({ skill, position, logoTexture, setHoveredSkill }: KeyProps) {
+function Key({
+  skill,
+  position,
+  logoTexture,
+  activeKey,
+  setActiveKey,
+}: KeyProps) {
+  const isActive = activeKey === skill.name;
+  const positionY = position[1];
+
   const [spring, api] = useReactSpring(() => ({
     y: position[1],
     config: { mass: 1, tension: 200, friction: 20 },
   }));
 
-  const handlePointerOver = () => {
-    api.start({ y: position[1] - 0.15 });
-    setHoveredSkill(skill.name);
-  };
-  const handlePointerOut = () => {
-    api.start({ y: position[1] });
-  };
+  useEffect(() => {
+    if (isActive) {
+      api.start({ y: positionY - 0.2 });
+    } else {
+      api.start({ y: positionY });
+    }
+  }, [isActive, positionY, api]);
 
   return (
-    <a.group position={position} position-y={spring.y}>
-      <RoundedBox
-        args={[1.3, 1, 1.3]}
-        radius={0.3}
-        smoothness={4}
-        onPointerOver={handlePointerOver}
-        onPointerOut={handlePointerOut}
-      >
+    <a.group
+      position-x={position[0]}
+      position-y={spring.y}
+      position-z={position[2]}
+      onPointerOver={() => setActiveKey(skill.name)}
+      onPointerOut={() => setActiveKey(null)}
+    >
+      <RoundedBox args={[1.3, 1, 1.3]} radius={0.3} smoothness={4}>
         <meshStandardMaterial
           color={skill.color}
           emissive={skill.color}
@@ -93,13 +90,17 @@ function Key({ skill, position, logoTexture, setHoveredSkill }: KeyProps) {
 
 function KeyboardScene({
   skills,
-  setHoveredSkill,
-}: TechKeyboard3DProps & { setHoveredSkill: (name: string | null) => void }) {
+  activeKey,
+  setActiveKey,
+}: TechKeyboard3DProps & {
+  activeKey: string | null;
+  setActiveKey: (name: string | null) => void;
+}) {
   const { theme } = useTheme();
 
-  const keysPerRow = 5;
+  const keysPerRow = 4;
   const keySpacing = 1.5;
-  const rowSpacing = 1.5;
+  const rowSpacing = 1.7;
 
   const logoUrls = skills.map((skill) => skill.logoUrl);
   const textures = useTexture(logoUrls);
@@ -122,7 +123,8 @@ function KeyboardScene({
             skill={skill}
             position={[x, 0, z]}
             logoTexture={textures[index]}
-            setHoveredSkill={setHoveredSkill}
+            activeKey={activeKey}
+            setActiveKey={setActiveKey}
           />
         );
       })}
@@ -140,7 +142,7 @@ function KeyboardScene({
       <OrbitControls
         enableZoom={false}
         enablePan={false}
-        target={[-0.55, 1, 0]}
+        target={[-0.85, 3, 0]}
         enableRotate={false}
         minPolarAngle={Math.PI / 6}
         maxPolarAngle={Math.PI / 3}
@@ -152,37 +154,37 @@ function KeyboardScene({
 }
 
 export function TechKeyboard3D({ skills }: TechKeyboard3DProps) {
-  const [width] = useWindowSize();
-  const isMobile = width < 768;
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeKey, setActiveKey] = useState<string | null>(null);
+
   const { mouseX, mouseY } = useCursorFollow(containerRef);
 
   const smoothX = useSpring(mouseX, {
-    stiffness: 300,
-    damping: 25,
-    mass: 0.5,
+    stiffness: 100,
+    damping: 30,
+    mass: 0.8,
   });
+
   const smoothY = useSpring(mouseY, {
-    stiffness: 300,
-    damping: 25,
-    mass: 0.5,
+    stiffness: 100,
+    damping: 30,
+    mass: 0.8,
   });
 
-  if (isMobile) {
-    return null;
-  }
+  const cameraPosition: [number, number, number] = [-3, 12, 5];
 
-  const cameraPosition: [number, number, number] = [-4, 12, 8];
+  const handlePointerLeave = () => {
+    setActiveKey(null);
+  };
 
   return (
     <div
       ref={containerRef}
       className="relative w-full h-[500px] lg:h-[600px] cursor-grab"
-      onMouseLeave={() => setHoveredSkill(null)}
+      onPointerLeave={handlePointerLeave}
     >
       <AnimatePresence>
-        {hoveredSkill && (
+        {activeKey && (
           <motion.div
             className="absolute pointer-events-none z-10"
             style={{
@@ -198,17 +200,22 @@ export function TechKeyboard3D({ skills }: TechKeyboard3DProps) {
               scale: { type: "spring", stiffness: 300, damping: 20 },
             }}
           >
-            <CursorFollow text={hoveredSkill} mouseX={mouseX} mouseY={mouseY} />
+            <CursorFollow text={activeKey} mouseX={mouseX} mouseY={mouseY} />
           </motion.div>
         )}
       </AnimatePresence>
+
       <Canvas
         shadows
         dpr={[1, 2]}
         camera={{ position: cameraPosition, fov: 30 }}
       >
         <Suspense fallback={null}>
-          <KeyboardScene skills={skills} setHoveredSkill={setHoveredSkill} />
+          <KeyboardScene
+            skills={skills}
+            activeKey={activeKey}
+            setActiveKey={setActiveKey}
+          />
         </Suspense>
       </Canvas>
     </div>

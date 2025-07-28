@@ -12,7 +12,7 @@ export function ProjectSection() {
   const projectsForMobile = projects.slice(0, 3);
 
   return (
-    <div className="relative pt-24 xl:pt-32">
+    <div id="projects-section" className="relative pt-20 lg:pt-24">
       <div className="text-center mb-10 lg:mb-14 px-4 lg:px-8">
         <Badge text="Featured Work" icon={<Sparkles className="w-4 h-4" />} />
         <h2 className="text-5xl lg:text-7xl font-black text-gradient animate-gradientText mb-2 lg:mb-4">
@@ -32,7 +32,7 @@ export function ProjectSection() {
         <ProjectMobile projects={projectsForMobile} />
       </div>
 
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-8 md:mt-0">
         <MagneticButton href="/projects" className="px-8 md:px-12">
           <div className="flex items-start font-light text-sm gap-2">
             <span className="mt-1"> All Projects</span>
