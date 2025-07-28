@@ -27,7 +27,7 @@ export function GradientButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`py-4 md:py-5 flex items-center justify-center bg-gradient animate-gradientShift text-lg text-white 
-        font-semibold rounded-full group relative overflow-hidden ${className}`}
+       font-semibold rounded-full group relative overflow-hidden ${className}`}
       style={{
         x,
         y,
@@ -47,7 +47,7 @@ export function GradientButton({
       >
         {children}
         {icon && (
-          <span className="ml-3 h-5 w-5 rotate-90 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+          <span className="ml-2 rotate-90 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
             {icon}
           </span>
         )}

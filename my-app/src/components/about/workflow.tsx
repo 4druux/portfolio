@@ -8,6 +8,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { workflowSteps } from "@/data/about-data";
+import { AnimatedText } from "../animated/animated-text";
 
 interface WorkflowStepProps {
   step: (typeof workflowSteps)[0];
@@ -26,7 +27,7 @@ function WorkflowStep({ step }: WorkflowStepProps) {
       </div>
       <div className="bg-background p-1 text-center">
         <h4 className="max-w-[250px] text-base font-medium text-foreground/80">
-          {step.title}
+          <AnimatedText lines={[step.title]} />
         </h4>
       </div>
     </div>

@@ -69,7 +69,7 @@ export const projects = [
       getImageUrl(images.ecom2),
       getImageUrl(images.ecom3),
     ],
-    year: "2025",
+    year: "2024",
     description:
       "A minimal dashboard for small businesses to manage products, orders, and user analytics. Prioritizes clean UI, accessibility, and ease of navigation.",
     link: "#",
@@ -107,7 +107,7 @@ export const projects = [
       getImageUrl(images.nc2),
       getImageUrl(images.nc3),
     ],
-    year: "2025",
+    year: "2024",
     description:
       "A vibrant landing page for a nutrition club promoting healthy lifestyles. Highlights products, customer testimonials, and bold CTAs in a modern layout.",
     link: "https://nc-me.vercel.app",
@@ -145,7 +145,7 @@ export const projects = [
       getImageUrl(images.tk2),
       getImageUrl(images.tk3),
     ],
-    year: "2025",
+    year: "2024",
     description:
       "An informative school homepage that showcases the vision, academic programs and registration details. Designed with clarity, responsiveness and stakeholder engagement.",
     link: "http://tkislambukitindah.vercel.app",

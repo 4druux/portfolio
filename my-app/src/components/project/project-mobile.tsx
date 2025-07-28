@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Project } from "@/data/project-home";
+import { AnimatedText } from "../animated/animated-text";
 
 interface ProjectMobileProps {
   projects: Project[];
@@ -34,7 +35,7 @@ export function ProjectMobile({ projects }: ProjectMobileProps) {
                     key={tag}
                     className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
                   >
-                    {tag}
+                    <AnimatedText lines={[tag]} />
                   </span>
                 ))}
               </div>
@@ -42,11 +43,15 @@ export function ProjectMobile({ projects }: ProjectMobileProps) {
                 {project.title}
               </h2>
               <div className="flex justify-between items-center mb-2 text-sm text-foreground/80">
-                <p className="text-foreground/80 text-sm">{project.service}</p>
-                <p className="text-foreground/80 text-sm">{project.year}</p>
+                <p className="text-foreground/80 text-sm">
+                  <AnimatedText lines={[project.service]} />
+                </p>
+                <p className="text-foreground/80 text-sm">
+                  <AnimatedText lines={[project.year]} />
+                </p>
               </div>
               <p className="text-foreground/80 text-xs line-clamp-5 min-h-[5rem]">
-                {project.description}
+             <AnimatedText lines={[project.description]} />
               </p>
             </div>
             <Link href={`/projects/${project.slug}`} rel="noopener noreferrer">

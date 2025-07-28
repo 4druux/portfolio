@@ -16,6 +16,7 @@ import { ProjectItem } from "./project-item";
 import { useCursorFollow } from "@/hooks/use-cursor-follow";
 import Link from "next/link";
 import { CursorFollow } from "../ui/cursor-follow";
+import { AnimatedText } from "../animated/animated-text";
 
 type MarqueeItem = {
   type: "text" | "img";
@@ -75,6 +76,7 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
   } | null>(null);
 
   const prevHoveredIndex = useRef<number | null>(null);
+
   useEffect(() => {
     prevHoveredIndex.current = hoveredIndex;
   }, [hoveredIndex]);
@@ -129,6 +131,7 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
       : -1;
 
   let marqueeItems: MarqueeItem[] = [];
+
   if (activeProjectDesktop) {
     const { textHover = [], imgHover = [] } = activeProjectDesktop;
     const maxLength = Math.max(textHover.length, imgHover.length);
@@ -330,12 +333,25 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
       </AnimatePresence>
 
       <div className="mb-10 relative">
+        <div className="grid grid-cols-12 items-center px-12 mb-4">
+          <h2 className="col-span-7 bg-foreground text-background upperca px-2 w-fit">
+            <AnimatedText lines={["App/Client"]} />
+          </h2>
+          <h2 className="col-span-4 bg-foreground text-background px-2 w-fit text-center">
+            <AnimatedText lines={["Service"]} />
+          </h2>
+          <h2 className="col-span-1 bg-foreground text-background px-2 w-fit text-right">
+            <AnimatedText lines={["Year"]} />
+          </h2>
+        </div>
+
         {projects.map((project, i) => (
           <ProjectItem
             key={i}
             onMouseEnter={(e) => handleMouseEnter(e, i)}
             title={project.title}
             service={project.service}
+            year={project.year}
           />
         ))}
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />

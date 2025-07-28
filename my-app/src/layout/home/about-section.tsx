@@ -1,12 +1,13 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
 import { useRef } from "react";
-import { TechKeyboard3D } from "./about/keyboard-3d";
-import Lanyard from "./about/lanyard";
-import { Workflow } from "./about/workflow";
+import { Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/bedge";
+import { Workflow } from "@/components/about/workflow";
+import { TechKeyboard3D } from "@/components/about/keyboard-3d";
 import { skills } from "@/data/about-data";
-import { Badge } from "./ui/bedge";
+import Lanyard from "@/components/about/lanyard";
+import { AnimatedText } from "@/components/animated/animated-text";
 
 export function AboutSection() {
   const ref = useRef(null);
@@ -21,13 +22,18 @@ export function AboutSection() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 lg:mb-14">
             <Badge text="About Me" icon={<Sparkles className="w-4 h-4" />} />
-            <h2 className="text-5xl lg:text-7xl font-black text-gradient animate-gradientText mb-2 lg:mb-4">
-              Crafting Digital Excellence
+
+            <h2 className="text-5xl lg:text-7xl font-semibold text-foreground mb-2 lg:mb-4">
+              <AnimatedText lines={["Crafting", "Digital Excellence"]} />
             </h2>
+
             <p className="text-foreground/80 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
-              With over 5 years of experience, I transform complex ideas into
-              elegant, user-centric digital solutions that drive business
-              growth.
+              <AnimatedText
+                lines={[
+                  "With over 5 years of experience, I transform complex ideas into",
+                  "elegant, user-centric digital solutions that drive business growth.",
+                ]}
+              />
             </p>
           </div>
 
@@ -39,20 +45,25 @@ export function AboutSection() {
             <div className="space-y-8">
               <div className="space-y-2">
                 <h3 className="text-foreground text-2xl lg:text-3xl font-bold">
-                  My Journey
+                  <AnimatedText lines={["My Journey"]} />
                 </h3>
-
                 <div className="text-foreground/80 space-y-2 text-base lg:text-lg leading-relaxed">
                   <p>
-                    I&apos;m a passionate full-stack developer who believes in
-                    the power of technology to create meaningful change. My
-                    journey began with curiosity and has evolved into a mission
-                    to build digital experiences that matter.
+                    <AnimatedText
+                      lines={[
+                        "I'm a passionate full-stack developer who believes in the power",
+                        "of technology to create meaningful change. My journey began",
+                        "with curiosity and has evolved into a mission to build digital experiences that matter.",
+                      ]}
+                    />
                   </p>
                   <p>
-                    When I&apos;m not crafting code, you&apos;ll find me
-                    exploring emerging technologies, contributing to open-source
-                    projects, or sharing knowledge with the developer community.
+                    <AnimatedText
+                      lines={[
+                        "When I'm not crafting code, you'll find me exploring emerging technologies, contributing to open-source projects",
+                        "or sharing knowledge with the developer community.",
+                      ]}
+                    />
                   </p>
                 </div>
               </div>
@@ -60,7 +71,7 @@ export function AboutSection() {
               <div>
                 <div className="hidden xl:block">
                   <h3 className="text-foreground text-2xl lg:text-3xl font-bold">
-                    Technical Expertise
+                    <AnimatedText lines={["Technical Expertise"]} />
                   </h3>
                   <TechKeyboard3D skills={skills} />
                 </div>

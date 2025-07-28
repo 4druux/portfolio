@@ -25,25 +25,26 @@ export function IconMagnetic({
     useMagnetic<HTMLButtonElement>();
 
   useEffect(() => {
-    const idleColor = theme === "dark" ? "#ffffff" : "#111111";
+    const idleColor = theme === "dark" ? "#fefff5" : "#1f2937";
     textControls.start({
       color: idleColor,
       transition: { duration: 0.1, ease: "easeInOut" },
     });
   }, [theme, textControls]);
 
-  const getIdleColor = () => (theme === "dark" ? "#ffffff" : "#111111");
-  const getHoverColor = () => (theme === "dark" ? "#111111" : "#ffffff");
+  const getIdleColor = () => (theme === "dark" ? "#fefff5" : "#1f2937");
+  const getHoverColor = () => (theme === "dark" ? "#1f2937" : "#fefff5");
 
   const onMouseEnter = () => {
     fillControls.start({
       y: ["80%", "-10%"],
-      transition: { ease: [0.19, 1, 0.22, 1], duration: 2 },
+      transition: { ease: [0.19, 1, 0.22, 1], duration: 1.5 },
     });
+
     textControls.start({
       scale: 1.05,
       color: getHoverColor(),
-      transition: { duration: 0.1, ease: "easeInOut" },
+      transition: { duration: 0.2, ease: "easeInOut" },
     });
   };
 
@@ -51,8 +52,9 @@ export function IconMagnetic({
     handleMouseLeave();
     fillControls.start({
       y: "-80%",
-      transition: { ease: [0.19, 1, 0.22, 1], duration: 2 },
+      transition: { ease: [0.19, 1, 0.22, 1], duration: 1.5 },
     });
+
     textControls.start({
       scale: 1,
       color: getIdleColor(),
@@ -68,7 +70,7 @@ export function IconMagnetic({
       onMouseMove={handleMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`p-4 lg:p-5 glass rounded-2xl relative overflow-hidden ${className}`}
+      className={`p-4 lg:p-5 border border-foreground rounded-2xl relative overflow-hidden ${className}`}
       style={{
         x,
         y,
@@ -89,7 +91,7 @@ export function IconMagnetic({
       <motion.div
         animate={fillControls}
         className="absolute top-[-30%] left-[-25%] w-[150%] h-[150%] rounded-[100%] pointer-events-none z-0 translate-y-[90%]
-        bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white"
+        bg-foreground"
       />
     </motion.button>
   );

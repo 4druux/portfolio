@@ -3,12 +3,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, MousePointer2 } from "lucide-react";
-import ShinyText from "./text/shiny-text";
-import MagneticButton from "./button/magnetic-button";
-import { GradientButton } from "./button/gradient-button";
+import { Badge } from "@/components/ui/bedge";
+import ShinyText from "@/components/text/shiny-text";
+import MagneticButton from "@/components/button/magnetic-button";
+import { GradientButton } from "@/components/button/gradient-button";
+import { IconMagnetic } from "@/components/ui/icon-magnetic";
 import { socialLinks } from "@/data/social-media-data";
-import { Badge } from "./ui/bedge";
-import { IconMagnetic } from "./ui/icon-magnetic";
+import { AnimatedText } from "@/components/animated/animated-text";
 
 export function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -35,7 +36,7 @@ export function HeroSection() {
               className="text-gray-800"
             />
             <motion.span className="block text-foreground">
-              Developer
+              <AnimatedText lines={["Developer"]} />
             </motion.span>
           </motion.h1>
 
@@ -52,7 +53,7 @@ export function HeroSection() {
           <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-8 justify-center w-full items-center mb-6 md:mb-12">
             <MagneticButton
               onClick={() => scrollToSection("contact")}
-              className="w-full md:w-1/3 lg:w-1/4 py-4 md:py-5 text-lg font-semibold"
+              className="w-full md:w-1/3 lg:w-1/4 py-4 md:py-5"
             >
               Let&apos;s Connect
             </MagneticButton>
@@ -89,7 +90,9 @@ export function HeroSection() {
             }}
           >
             <div className="flex flex-col items-center space-y-3">
-              <span className="text-sm font-medium">Scroll to explore</span>
+              <span className="text-sm font-medium">
+                <AnimatedText lines={[" Scroll to explore"]} />
+              </span>
               <IconMagnetic
                 onClick={() => scrollToSection("about-section")}
                 icon={<ArrowDown className="w-5 h-5" />}
