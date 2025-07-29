@@ -1,5 +1,4 @@
 import React from "react";
-import { AnimatedText } from "../animated/animated-text";
 
 interface ShinyTextProps {
   text: string;
@@ -39,7 +38,7 @@ const ShinyText: React.FC<ShinyTextProps> = ({
         animationDuration: animationDuration,
       }}
     >
-      <AnimatedText lines={[text]} />
+      {text}
     </div>
   );
 };

@@ -16,17 +16,22 @@ export function ProjectSection() {
     <div id="projects-section" className="relative pt-20 lg:pt-24">
       <div className="text-center mb-10 lg:mb-14 px-4 lg:px-8">
         <Badge text="Featured Work" icon={<Sparkles className="w-4 h-4" />} />
-        <h2 className="text-5xl lg:text-7xl font-semibold text-foreground mb-2 lg:mb-4">
-          <AnimatedText lines={[" Recent Projects"]} />
-        </h2>
-        <p className="text-foreground/80 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
-          <AnimatedText
-            lines={[
-              "A showcase of my recent work, featuring innovative solutions ",
-              "and cutting-edge technologies",
-            ]}
-          />
-        </p>
+
+        <AnimatedText
+          as="h2"
+          className="text-5xl lg:text-7xl font-semibold text-foreground mb-2 lg:mb-4"
+        >
+          Recent Projects
+        </AnimatedText>
+
+        <AnimatedText
+          as="p"
+          className="text-foreground/80 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed"
+        >
+          A showcase of my recent work, featuring innovative solutions and
+          cutting-edge technologies
+        </AnimatedText>
+       
       </div>
 
       <div className="hidden md:block">

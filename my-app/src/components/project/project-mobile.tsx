@@ -31,28 +31,32 @@ export function ProjectMobile({ projects }: ProjectMobileProps) {
             <div>
               <div className="flex flex-wrap gap-2 mb-2">
                 {project.textHover.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
-                  >
-                    <AnimatedText lines={[tag]} />
-                  </span>
+                  <div key={tag}>
+                    <AnimatedText
+                      as="p"
+                      className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
+                    >
+                      {tag}
+                    </AnimatedText>
+                  </div>
                 ))}
               </div>
               <h2 className="text-3xl font-bold text-foreground mb-1">
                 {project.title}
               </h2>
               <div className="flex justify-between items-center mb-2 text-sm text-foreground/80">
-                <p className="text-foreground/80 text-sm">
-                  <AnimatedText lines={[project.service]} />
-                </p>
-                <p className="text-foreground/80 text-sm">
-                  <AnimatedText lines={[project.year]} />
-                </p>
+                <AnimatedText as="p" className="text-foreground/80 text-sm">
+                  {project.service}
+                </AnimatedText>
+
+                <AnimatedText as="p" className="text-foreground/80 text-sm">
+                  {project.year}
+                </AnimatedText>
               </div>
-              <p className="text-foreground/80 text-xs line-clamp-5 min-h-[5rem]">
-             <AnimatedText lines={[project.description]} />
-              </p>
+
+              <AnimatedText as="p" className="text-foreground/80 text-sm">
+                {project.description}
+              </AnimatedText>
             </div>
             <Link href={`/projects/${project.slug}`} rel="noopener noreferrer">
               <button className="flex items-center gap-2 w-full justify-center bg-gradient animate-gradientShift text-white font-bold py-3 px-8 rounded-full mt-4">

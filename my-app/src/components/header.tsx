@@ -5,13 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Menu, X } from "lucide-react";
 import ShinyText from "./text/shiny-text";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname =
-    typeof window !== "undefined" ? window.location.pathname : "";
+  const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
@@ -152,8 +151,8 @@ export function Header() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
             className="md:hidden fixed top-[calc(20px + 80px + 1rem)] mt-4 left-1/2 -translate-x-1/2 w-[90%]
-                       backdrop-blur-md bg-black/10 border border-black/10 dark:bg-white/10 dark:border-white/10
-                       rounded-xl overflow-hidden shadow-lg p-4"
+                      backdrop-blur-md bg-black/10 border border-black/10 dark:bg-white/10 dark:border-white/10
+                      rounded-xl overflow-hidden shadow-lg p-4"
           >
             <nav className="flex flex-col space-y-1 py-2">
               {navItems.map((item, index) => (

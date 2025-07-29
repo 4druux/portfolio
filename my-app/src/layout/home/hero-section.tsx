@@ -9,7 +9,6 @@ import MagneticButton from "@/components/button/magnetic-button";
 import { GradientButton } from "@/components/button/gradient-button";
 import { IconMagnetic } from "@/components/ui/icon-magnetic";
 import { socialLinks } from "@/data/social-media-data";
-import { AnimatedText } from "@/components/animated/animated-text";
 
 export function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -36,7 +35,7 @@ export function HeroSection() {
               className="text-gray-800"
             />
             <motion.span className="block text-foreground">
-              <AnimatedText lines={["Developer"]} />
+              Developer
             </motion.span>
           </motion.h1>
 
@@ -90,9 +89,7 @@ export function HeroSection() {
             }}
           >
             <div className="flex flex-col items-center space-y-3">
-              <span className="text-sm font-medium">
-                <AnimatedText lines={[" Scroll to explore"]} />
-              </span>
+              <span className="text-sm font-medium">Scroll to explore</span>
               <IconMagnetic
                 onClick={() => scrollToSection("about-section")}
                 icon={<ArrowDown className="w-5 h-5" />}

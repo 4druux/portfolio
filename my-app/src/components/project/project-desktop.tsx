@@ -5,10 +5,11 @@ import {
   motion,
   AnimatePresence,
   useReducedMotion,
-  Transition,
   useVelocity,
   useTransform,
   useSpring,
+  type Transition,
+  type Variants,
 } from "framer-motion";
 import Image from "next/image";
 import { Project } from "@/data/project-home";
@@ -157,6 +158,20 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
   const transition: Transition = shouldReduceMotion
     ? { type: "tween", duration: 0 }
     : { type: "spring", stiffness: 100, damping: 20, mass: 1 };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 100, damping: 20 },
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      transition: { duration: 0.2 },
+    },
+  };
 
   return (
     <div
@@ -334,26 +349,49 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
 
       <div className="mb-10 relative">
         <div className="grid grid-cols-12 items-center px-12 mb-4">
-          <h2 className="col-span-7 bg-foreground text-background upperca px-2 w-fit">
-            <AnimatedText lines={["App/Client"]} />
-          </h2>
-          <h2 className="col-span-4 bg-foreground text-background px-2 w-fit text-center">
-            <AnimatedText lines={["Service"]} />
-          </h2>
-          <h2 className="col-span-1 bg-foreground text-background px-2 w-fit text-right">
-            <AnimatedText lines={["Year"]} />
-          </h2>
+          <AnimatedText
+            as="h2"
+            className="col-span-7 bg-foreground text-background px-2 w-fit text-center"
+          >
+            App/Client
+          </AnimatedText>
+
+          <AnimatedText
+            as="h2"
+            className="col-span-4 bg-foreground text-background px-2 w-fit text-center"
+          >
+            Service
+          </AnimatedText>
+
+          <AnimatedText
+            as="h2"
+            className="col-span-1 bg-foreground text-background px-2 w-fit text-center"
+          >
+            Year
+          </AnimatedText>
         </div>
 
-        {projects.map((project, i) => (
-          <ProjectItem
-            key={i}
-            onMouseEnter={(e) => handleMouseEnter(e, i)}
-            title={project.title}
-            service={project.service}
-            year={project.year}
-          />
-        ))}
+        <AnimatePresence mode="wait">
+          {projects.map((project, i) => (
+            <div key={project.slug || project.title} className="relative">
+              <div className="absolute top-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
+
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <ProjectItem
+                  onMouseEnter={(e) => handleMouseEnter(e, i)}
+                  title={project.title}
+                  service={project.service}
+                  year={project.year}
+                />
+              </motion.div>
+            </div>
+          ))}
+        </AnimatePresence>
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
       </div>
     </div>

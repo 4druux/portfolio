@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { createElement, ReactNode, useEffect, useRef, useState } from "react";
 
 const containerVariants: Variants = {
   hidden: {},
@@ -25,33 +26,82 @@ const lineVariants: Variants = {
 };
 
 interface AnimatedTextProps {
-  lines: string[];
+  children: ReactNode;
   className?: string;
-  onAnimationComplete?: () => void;
-  onViewportLeave?: () => void;
+  as?: keyof JSX.IntrinsicElements;
 }
 
 export function AnimatedText({
-  lines,
+  children,
   className,
-  onAnimationComplete,
-  onViewportLeave,
+  as: Tag = "div",
 }: AnimatedTextProps) {
-  return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      onAnimationComplete={onAnimationComplete}
-      onViewportLeave={onViewportLeave}
-      viewport={{ once: false, amount: 0.5 }}
-      variants={containerVariants}
-    >
-      {lines.map((line, index) => (
-        <div key={index} className="overflow-hidden">
-          <motion.div variants={lineVariants}>{line || " "}</motion.div>
-        </div>
-      ))}
-    </motion.div>
+  const [lines, setLines] = useState<string[]>([]);
+  const containerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || typeof children !== "string") return;
+
+    const words = children.trim().split(" ");
+    if (words.length === 0) return;
+
+    // Gunakan klon untuk pengukuran yang aman
+    const clone = container.cloneNode() as HTMLElement;
+    clone.style.position = "absolute";
+    clone.style.visibility = "hidden";
+    clone.style.height = "auto";
+    clone.style.pointerEvents = "none";
+    document.body.appendChild(clone);
+
+    const tempLines: string[] = [];
+    let currentLine = words[0];
+    clone.innerHTML = currentLine;
+    let lastHeight = clone.offsetHeight;
+
+    for (let i = 1; i < words.length; i++) {
+      clone.innerHTML += ` ${words[i]}`;
+      if (clone.offsetHeight > lastHeight) {
+        tempLines.push(currentLine);
+        currentLine = words[i];
+        lastHeight = clone.offsetHeight;
+      } else {
+        currentLine += ` ${words[i]}`;
+      }
+    }
+    tempLines.push(currentLine);
+
+    document.body.removeChild(clone);
+    setLines(tempLines);
+  }, [children]);
+
+  return createElement(
+    Tag,
+    {
+      ref: containerRef,
+      className: `relative ${className || ""}`,
+      "aria-label": typeof children === "string" ? children : undefined,
+    },
+    <>
+      <span className="invisible">{children}</span>
+
+      <motion.span
+        aria-hidden
+        key={lines.join("-")}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.5 }}
+        variants={containerVariants}
+        className="absolute inset-0"
+      >
+        {lines.map((line, index) => (
+          <span key={index} className="block overflow-hidden">
+            <motion.span className="block" variants={lineVariants}>
+              {line}
+            </motion.span>
+          </span>
+        ))}
+      </motion.span>
+    </>
   );
 }
