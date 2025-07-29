@@ -7,7 +7,7 @@ import { Workflow } from "@/components/about/workflow";
 import { TechKeyboard3D } from "@/components/about/keyboard-3d";
 import { skills } from "@/data/about-data";
 import Lanyard from "@/components/about/lanyard";
-import { AnimatedText } from "@/components/animated/animated-text";
+import { SlideUp } from "@/components/animated/slide-up";
 
 export function AboutSection() {
   const ref = useRef(null);
@@ -22,21 +22,17 @@ export function AboutSection() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 lg:mb-14">
             <Badge text="About Me" icon={<Sparkles className="w-4 h-4" />} />
-
-            <AnimatedText
-              as="h2"
+            <SlideUp
+              el="h2"
+              text="Crafting Digital Excellence"
               className="text-5xl lg:text-7xl font-semibold text-foreground mb-2 lg:mb-4"
-            >
-              Crafting Digital Excellence
-            </AnimatedText>
-
-            <AnimatedText
-              as="p"
+            />
+            <SlideUp
+              el="p"
+              text="With over 5 years of experience, I transform complex ideas into
+            elegant, user-centric digital solutions that drive business growth"
               className="text-foreground/80 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed"
-            >
-              With over 5 years of experience, I transform complex ideas into
-              elegant, user-centric digital solutions that drive business growth
-            </AnimatedText>
+            />
           </div>
 
           <div className="mb-10 md:mb-14">
@@ -46,42 +42,39 @@ export function AboutSection() {
           <div className="grid xl:grid-cols-2 xl:gap-16 items-start">
             <div className="space-y-8">
               <div className="space-y-2">
-                <AnimatedText
-                  as="h3"
+                <SlideUp
+                  el="h3"
+                  text="My Journey"
                   className="text-foreground text-2xl lg:text-3xl font-bold"
-                >
-                  My Journey
-                </AnimatedText>
-                <div className="flex flex-col gap-4">
-                  <AnimatedText
-                    as="p"
-                    className="text-foreground/80 space-y-2 text-base lg:text-lg leading-relaxed"
-                  >
-                    I&apos;m a passionate full-stack developer who believes in
-                    the power of technology to create meaningful change. My
-                    journey began with curiosity and has evolved into a mission
-                    to build digital experiences that matter.
-                  </AnimatedText>
+                />
 
-                  <AnimatedText
-                    as="p"
+                <div className="flex flex-col gap-4">
+                  <SlideUp
+                    el="p"
+                    text="I'm a passionate full-stack developer who believes in the
+                  power of technology to create meaningful change. My journey
+                  began with curiosity and has evolved into a mission to build
+                  digital experiences that matter."
                     className="text-foreground/80 space-y-2 text-base lg:text-lg leading-relaxed"
-                  >
-                    When I&apos;m not crafting code, you&apos;ll find me
-                    exploring emerging technologies, contributing to open-source
-                    projects or sharing knowledge with the developer community.
-                  </AnimatedText>
+                  />
+
+                  <SlideUp
+                    el="p"
+                    text="When I'm not crafting code, you'll find me exploring
+                  emerging technologies, contributing to open-source projects or
+                  sharing knowledge with the developer community."
+                    className="text-foreground/80 space-y-2 text-base lg:text-lg leading-relaxed"
+                  />
                 </div>
               </div>
 
               <div>
                 <div className="hidden xl:block">
-                  <AnimatedText
-                    as="h3"
+                  <SlideUp
+                    el="h3"
+                    text="Technical Expertise"
                     className="text-foreground text-2xl lg:text-3xl font-bold"
-                  >
-                    Technical Expertise
-                  </AnimatedText>
+                  />
                   <TechKeyboard3D skills={skills} />
                 </div>
               </div>

@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Project } from "@/data/project-home";
-import { AnimatedText } from "../animated/animated-text";
+import { SlideUp } from "../animated/slide-up";
+import { motion } from "framer-motion";
 
 interface ProjectMobileProps {
   projects: Project[];
@@ -29,34 +30,51 @@ export function ProjectMobile({ projects }: ProjectMobileProps) {
           </div>
           <div className="bg-[#F2EEE7] dark:bg-[#1a1a1a] px-4 py-8 rounded-b-2xl">
             <div>
-              <div className="flex flex-wrap gap-2 mb-2">
+              <div className="flex flex-wrap gap-2 mb-4">
                 {project.textHover.map((tag) => (
-                  <div key={tag}>
-                    <AnimatedText
-                      as="p"
-                      className="px-3 py-1 text-xs font-medium rounded-full bg-black/5 dark:bg-white/10 text-foreground/80"
+                  <div key={tag} className="overflow-hidden">
+                    <motion.p
+                      initial={{ y: "100%", opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      viewport={{ once: false }}
+                      transition={{
+                        duration: 0.6,
+                        ease: "easeInOut",
+                        delay: 0.2,
+                      }}
+                      className="px-3 py-1 text-xs text-center font-medium rounded-full glass bg-background text-foreground/80"
                     >
                       {tag}
-                    </AnimatedText>
+                    </motion.p>
                   </div>
                 ))}
               </div>
-              <h2 className="text-3xl font-bold text-foreground mb-1">
-                {project.title}
-              </h2>
-              <div className="flex justify-between items-center mb-2 text-sm text-foreground/80">
-                <AnimatedText as="p" className="text-foreground/80 text-sm">
-                  {project.service}
-                </AnimatedText>
 
-                <AnimatedText as="p" className="text-foreground/80 text-sm">
-                  {project.year}
-                </AnimatedText>
+              <SlideUp
+                el="h2"
+                text={project.title}
+                className="text-3xl font-bold text-foreground mb-1"
+              />
+
+              <div className="flex justify-between items-center mb-2 text-sm text-foreground/80">
+                <SlideUp
+                  el="p"
+                  text={project.service}
+                  className="text-foreground/80 text-sm"
+                />
+
+                <SlideUp
+                  el="p"
+                  text={project.year}
+                  className="text-foreground/80 text-sm"
+                />
               </div>
 
-              <AnimatedText as="p" className="text-foreground/80 text-sm">
-                {project.description}
-              </AnimatedText>
+              <SlideUp
+                el="p"
+                text={project.description}
+                className="text-foreground/80 text-sm"
+              />
             </div>
             <Link href={`/projects/${project.slug}`} rel="noopener noreferrer">
               <button className="flex items-center gap-2 w-full justify-center bg-gradient animate-gradientShift text-white font-bold py-3 px-8 rounded-full mt-4">

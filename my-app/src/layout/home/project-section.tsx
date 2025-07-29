@@ -6,7 +6,7 @@ import { ProjectDesktop } from "@/components/project/project-desktop";
 import { ProjectMobile } from "@/components/project/project-mobile";
 import MagneticButton from "@/components/button/magnetic-button";
 import { Sparkles } from "lucide-react";
-import { AnimatedText } from "@/components/animated/animated-text";
+import { SlideUp } from "@/components/animated/slide-up";
 
 export function ProjectSection() {
   const projectsForDesktop = projects.slice(0, 5);
@@ -17,21 +17,16 @@ export function ProjectSection() {
       <div className="text-center mb-10 lg:mb-14 px-4 lg:px-8">
         <Badge text="Featured Work" icon={<Sparkles className="w-4 h-4" />} />
 
-        <AnimatedText
-          as="h2"
+        <SlideUp
+          el="h2"
+          text="Recent Projects"
           className="text-5xl lg:text-7xl font-semibold text-foreground mb-2 lg:mb-4"
-        >
-          Recent Projects
-        </AnimatedText>
-
-        <AnimatedText
-          as="p"
+        />
+        <SlideUp
+          el="p"
+          text="A showcase of my recent work, featuring innovative solutions and cutting-edge technologies"
           className="text-foreground/80 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed"
-        >
-          A showcase of my recent work, featuring innovative solutions and
-          cutting-edge technologies
-        </AnimatedText>
-       
+        />
       </div>
 
       <div className="hidden md:block">

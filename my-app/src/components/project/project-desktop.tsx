@@ -9,15 +9,14 @@ import {
   useTransform,
   useSpring,
   type Transition,
-  type Variants,
 } from "framer-motion";
 import Image from "next/image";
 import { Project } from "@/data/project-home";
-import { ProjectItem } from "./project-item";
 import { useCursorFollow } from "@/hooks/use-cursor-follow";
 import Link from "next/link";
 import { CursorFollow } from "../ui/cursor-follow";
-import { AnimatedText } from "../animated/animated-text";
+import { ProjectList } from "./project-list";
+import { ProjectHeader } from "./project-header";
 
 type MarqueeItem = {
   type: "text" | "img";
@@ -26,9 +25,13 @@ type MarqueeItem = {
 
 interface ProjectDesktopProps {
   projects: Project[];
+  enableListAnimation?: boolean;
 }
 
-export function ProjectDesktop({ projects }: ProjectDesktopProps) {
+export function ProjectDesktop({
+  projects,
+  enableListAnimation = false,
+}: ProjectDesktopProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [bounds, setBounds] = useState<DOMRect | null>(null);
   const [cursorDirection, setCursorDirection] = useState<"top" | "bottom">(
@@ -158,20 +161,6 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
   const transition: Transition = shouldReduceMotion
     ? { type: "tween", duration: 0 }
     : { type: "spring", stiffness: 100, damping: 20, mass: 1 };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: "spring", stiffness: 100, damping: 20 },
-    },
-    exit: {
-      opacity: 0,
-      y: -20,
-      transition: { duration: 0.2 },
-    },
-  };
 
   return (
     <div
@@ -348,50 +337,14 @@ export function ProjectDesktop({ projects }: ProjectDesktopProps) {
       </AnimatePresence>
 
       <div className="mb-10 relative">
-        <div className="grid grid-cols-12 items-center px-12 mb-4">
-          <AnimatedText
-            as="h2"
-            className="col-span-7 bg-foreground text-background px-2 w-fit text-center"
-          >
-            App/Client
-          </AnimatedText>
+        <ProjectHeader />
 
-          <AnimatedText
-            as="h2"
-            className="col-span-4 bg-foreground text-background px-2 w-fit text-center"
-          >
-            Service
-          </AnimatedText>
+        <ProjectList
+          projects={projects}
+          onMouseEnter={handleMouseEnter}
+          enableAnimation={enableListAnimation}
+        />
 
-          <AnimatedText
-            as="h2"
-            className="col-span-1 bg-foreground text-background px-2 w-fit text-center"
-          >
-            Year
-          </AnimatedText>
-        </div>
-
-        <AnimatePresence mode="wait">
-          {projects.map((project, i) => (
-            <div key={project.slug || project.title} className="relative">
-              <div className="absolute top-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
-
-              <motion.div
-                variants={itemVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <ProjectItem
-                  onMouseEnter={(e) => handleMouseEnter(e, i)}
-                  title={project.title}
-                  service={project.service}
-                  year={project.year}
-                />
-              </motion.div>
-            </div>
-          ))}
-        </AnimatePresence>
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/20 mix-blend-difference z-30 pointer-events-none" />
       </div>
     </div>

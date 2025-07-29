@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { AnimatedText } from "../animated/animated-text";
+import { SlideUp } from "../animated/slide-up";
 
 interface ProjectItemProps {
   title: string;
@@ -21,26 +21,23 @@ export function ProjectItem({
       onMouseEnter={onMouseEnter}
       className="relative grid grid-cols-12 items-center p-12 cursor-default"
     >
-      <AnimatedText
-        as="h2"
+      <SlideUp
+        el="h2"
+        text={title}
         className="col-span-7 text-4xl xl:text-5xl relative z-10 text-foreground"
-      >
-        {title}
-      </AnimatedText>
+      />
 
-      <AnimatedText
-        as="p"
+      <SlideUp
+        el="p"
+        text={service}
         className="col-span-4 text-md xl:text-lg relative z-10 text-foreground"
-      >
-        {service}
-      </AnimatedText>
+      />
 
-      <AnimatedText
-        as="p"
+      <SlideUp
+        el="p"
+        text={year}
         className="col-span-1 text-md xl:text-lg relative z-10 text-foreground"
-      >
-        {year}
-      </AnimatedText>
+      />
     </div>
   );
 }
