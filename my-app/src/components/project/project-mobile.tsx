@@ -73,7 +73,7 @@ export function ProjectMobile({ projects }: ProjectMobileProps) {
               <SlideUp
                 el="p"
                 text={project.description}
-                className="text-foreground/80 text-sm"
+                className="text-foreground/80 text-sm line-clamp-3"
               />
             </div>
             <Link href={`/projects/${project.slug}`} rel="noopener noreferrer">

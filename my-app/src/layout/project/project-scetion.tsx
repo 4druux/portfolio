@@ -28,7 +28,7 @@ export function ProjectSection() {
   });
 
   return (
-    <div className="relative pt-20 lg:pt-24">
+    <div className="relative pt-20 lg:pt-40">
       <div className="text-center mb-10 lg:mb-14 px-4 lg:px-8">
         <Badge text="Featured Work" icon={<Sparkles className="w-4 h-4" />} />
         <SlideUp

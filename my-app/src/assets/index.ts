@@ -21,6 +21,8 @@ import mysql from "@/assets/logo/mysql.svg";
 // lanyard
 import lanyard from "@/assets/lanyard/lanyard.png";
 
+import photostudio from "@/assets/project/photo-studio.gif";
+
 type ImageType = StaticImageData | string;
 export const getImageUrl = (image: ImageType): string => {
   if (typeof image === "string") {
@@ -50,6 +52,8 @@ export const images: { [key: string]: ImageType } = {
 
   // lanyard
   lanyard,
+
+  photostudio,
 
   // project
   alltrailsDesktop:
@@ -90,15 +94,34 @@ export const images: { [key: string]: ImageType } = {
   ecom3:
     "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626521/ecom-1_wb9osx.jpg",
 
+  // mukrindo
   mukrindoDesktop:
     "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626445/mukrindoDesktop_nzjttv.png",
   mukrindoMobile:
     "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626446/mukrindoMobile_tfxdnz.png",
-  mukrindo1:
+
+  // mukrindo detail
+  mukrindoDetail1:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753872410/mukrindo-1_wt2qfr.png",
+  mukrindoDetail2:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753870187/mukrindo-2_wn7kye.png",
+  mukrindoDetail3:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753870189/mukrindo-3_ia8x0m.png",
+  mukrindoDetail4:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753870190/mukrindo-4_r09iwg.png",
+  mukrindoDetail5:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753870189/mukrindo-5_xho944.png",
+  mukrindoDetail6:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753870188/mukrindo-6_znkwai.png",
+  mukrindoDetail7:
+    "https://res.cloudinary.com/do1oxpnak/image/upload/v1753870188/mukrindo-7_kqrr5p.png",
+
+  // mukrindo hover
+  mukrindoHover1:
     "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626512/mukrindo-3_xtonom.jpg",
-  mukrindo2:
+  mukrindoHover2:
     "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626471/mukrindo-2_rixuew.jpg",
-  mukrindo3:
+  mukrindoHover3:
     "https://res.cloudinary.com/do1oxpnak/image/upload/v1753626440/mukrindo-1_nvxrqk.jpg",
 
   ncDesktop:

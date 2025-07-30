@@ -4,6 +4,7 @@
 
 * {
   font-family: var(--font-hevaria), sans-serif;
+  scrollbar-width: none;
 }
 
 :root {

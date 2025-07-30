@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Header } from "@/components/header";
+import { LenisScroller } from "@/utils/lenis-scroller";
 
 const hevaria = localFont({
   src: [
@@ -36,6 +37,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <Header />
+          <LenisScroller />
           {children}
         </ThemeProvider>
       </body>

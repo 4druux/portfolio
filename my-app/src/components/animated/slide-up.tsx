@@ -80,7 +80,7 @@ export function SlideUp({
 
     document.body.removeChild(clone);
     setLines(tempLines);
-  }, [text, className]); // Tambahkan className sebagai dependency
+  }, [text, className]);
 
   return (
     <Wrapper
@@ -88,18 +88,16 @@ export function SlideUp({
       className={`relative ${className || ""}`}
       aria-label={text}
     >
-      {/* Teks tak terlihat ini berfungsi untuk menjaga tinggi & lebar layout */}
       <span className="invisible" aria-hidden="true">
         {text}
       </span>
 
-      {/* Teks animasi ini akan ditampilkan di atas teks tak terlihat */}
-      <motion.div
+      <motion.span
         aria-hidden="true"
-        key={lines.join("-")} // Kunci unik untuk memicu re-render saat baris berubah
+        key={lines.join("-")}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
+        viewport={{ once: false, amount: 0.3 }}
         variants={containerVariants}
         className="absolute inset-0"
       >
@@ -110,7 +108,7 @@ export function SlideUp({
             </motion.span>
           </span>
         ))}
-      </motion.div>
+      </motion.span>
     </Wrapper>
   );
 }
