@@ -31,8 +31,6 @@ export const projects = [
         getImageUrl(images.mukrindoDetail3),
         getImageUrl(images.mukrindoDetail4),
         getImageUrl(images.mukrindoDetail5),
-        getImageUrl(images.mukrindoDetail6),
-        getImageUrl(images.mukrindoDetail7),
       ],
     },
     textHover: ["Scalable", "User-Friendly", "Dashboard"],
@@ -54,8 +52,11 @@ export const projects = [
       desktop: getImageUrl(images.antikaDesktop),
       mobile: getImageUrl(images.antikaMobile),
       detail: [
-        getImageUrl(images.photostudio),
-        getImageUrl(images.antikaDesktop),
+        getImageUrl(images.antikaDetail1),
+        getImageUrl(images.antikaDetail2),
+        getImageUrl(images.antikaDetail3),
+        getImageUrl(images.antikaDetail4),
+        getImageUrl(images.antikaDetail5),
       ],
     },
     textHover: ["Easy Booking", "Personalized", "High-Quality"],
@@ -76,6 +77,13 @@ export const projects = [
     imgProject: {
       desktop: getImageUrl(images.ecomDesktop),
       mobile: getImageUrl(images.ecomMobile),
+      detail: [
+        getImageUrl(images.ecommerceDetail1),
+        getImageUrl(images.ecommerceDetail2),
+        getImageUrl(images.ecommerceDetail3),
+        getImageUrl(images.ecommerceDetail4),
+        getImageUrl(images.ecommerceDetail5),
+      ],
     },
     textHover: ["Design", "Catalog", "Dashboard"],
     imgHover: [
@@ -95,6 +103,13 @@ export const projects = [
     imgProject: {
       desktop: getImageUrl(images.alltrailsDesktop),
       mobile: getImageUrl(images.alltrailsMobile),
+      detail: [
+        getImageUrl(images.alltrailsDetail1),
+        getImageUrl(images.alltrailsDetail2),
+        getImageUrl(images.alltrailsDetail3),
+        getImageUrl(images.alltrailsDetail4),
+        getImageUrl(images.alltrailsDetail5),
+      ],
     },
     textHover: ["Visual", "Responsive", "Interactive"],
     imgHover: [
@@ -114,6 +129,13 @@ export const projects = [
     imgProject: {
       desktop: getImageUrl(images.ncDesktop),
       mobile: getImageUrl(images.ncMobile),
+      detail: [
+        getImageUrl(images.ncDetail1),
+        getImageUrl(images.ncDetail2),
+        getImageUrl(images.ncDetail2),
+        getImageUrl(images.ncDetail2),
+        getImageUrl(images.ncDetail3),
+      ],
     },
     textHover: ["Healthy", "Energize", "Wellness"],
     imgHover: [
@@ -133,6 +155,13 @@ export const projects = [
     imgProject: {
       desktop: getImageUrl(images.buttonDesktop),
       mobile: getImageUrl(images.buttonMobile),
+      detail: [
+        getImageUrl(images.buttonDetail1),
+        getImageUrl(images.buttonDetail2),
+        getImageUrl(images.buttonDetail3),
+        getImageUrl(images.buttonDetail4),
+        getImageUrl(images.buttonDetail5),
+      ],
     },
     textHover: ["Creative", "Visual Craftsmanship", "Interactive"],
     imgHover: [
@@ -152,6 +181,13 @@ export const projects = [
     imgProject: {
       desktop: getImageUrl(images.tkDesktop),
       mobile: getImageUrl(images.tkMobile),
+      detail: [
+        getImageUrl(images.tkDetail1),
+        getImageUrl(images.tkDetail2),
+        getImageUrl(images.tkDetail3),
+        getImageUrl(images.tkDetail4),
+        getImageUrl(images.tkDetail5),
+      ],
     },
     textHover: ["Learn", "Discover", "Explore"],
     imgHover: [

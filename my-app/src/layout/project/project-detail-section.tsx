@@ -8,28 +8,33 @@ import { Badge } from "@/components/ui/bedge";
 import { useLayoutEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SlideUp } from "@/components/animated/slide-up";
 
 export function ProjectDetailSection({ slug }: { slug: string }) {
   const project = projects.find((p) => p.slug === slug);
 
-  const carouselImages = useMemo(() => {
+  const detailMedia = useMemo(() => {
     return [...(project?.imgProject.detail || [])];
   }, [project]);
 
+  const imageUrls = detailMedia.filter((url) => !url.endsWith(".mp4"));
+  const videoUrl = detailMedia.find((url) => url.endsWith(".mp4"));
+
   const parallaxContainerRef = useRef(null);
   const parallaxImageRef = useRef(null);
+  const gridImagesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const gridContainerRef = useRef(null);
+  const videoContainerRef = useRef(null);
+  const videoRef = useRef(null);
 
   useLayoutEffect(() => {
-    if (!carouselImages[0]) return;
-
+    if (!imageUrls[0]) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
         parallaxImageRef.current,
-        {
-          yPercent: -15,
-        },
+        { yPercent: -15 },
         {
           yPercent: 15,
           ease: "none",
@@ -41,10 +46,54 @@ export function ProjectDetailSection({ slug }: { slug: string }) {
           },
         }
       );
-    }, parallaxContainerRef);
+
+      const gridContainers = gridImagesRef.current
+        .map((img) => img?.parentElement)
+        .filter(Boolean);
+
+      const containerPositions = [
+        { from: -100, to: 100 },
+        { from: 0, to: 0 },
+        { from: 100, to: -100 },
+      ];
+
+      gridContainers.forEach((container, i) => {
+        gsap.fromTo(
+          container as gsap.TweenTarget,
+          { y: containerPositions[i].from },
+          {
+            y: containerPositions[i].to,
+            ease: "none",
+            scrollTrigger: {
+              trigger: gridContainerRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0,
+            },
+          }
+        );
+      });
+
+      if (videoUrl) {
+        gsap.fromTo(
+          videoRef.current,
+          { yPercent: -5 },
+          {
+            yPercent: 5,
+            ease: "none",
+            scrollTrigger: {
+              trigger: videoContainerRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+      }
+    });
 
     return () => ctx.revert();
-  }, [carouselImages]);
+  }, [imageUrls, videoUrl]);
 
   if (!project) {
     notFound();
@@ -84,33 +133,41 @@ export function ProjectDetailSection({ slug }: { slug: string }) {
 
       <div
         ref={parallaxContainerRef}
-        className="relative w-full h-screen overflow-hidden"
+        className="relative w-full h-[30dvh] md:h-[50dvh] xl:h-[100dvh] overflow-hidden"
       >
-        {carouselImages[0] && (
+        {imageUrls[0] && (
           <Image
             ref={parallaxImageRef}
-            src={carouselImages[0]}
+            src={imageUrls[0]}
             alt="Detail Proyek Parallax"
             fill
             priority
-            className="absolute top-0 left-0 w-full h-[150%] object-cover"
+            className="absolute top-0 left-0 w-full h-[120%] object-cover"
           />
         )}
       </div>
 
       <div className="bg-background">
-        <div className="flex flex-col justify-center items-start max-w-7xl mx-auto py-32 px-4 lg:px-0">
-          <p className="text-foreground/80 text-3xl leading-relaxed">
-            {project.description}
-          </p>
+        <div className="flex flex-col justify-center items-start max-w-7xl mx-auto py-20 xl:py-32 px-4 lg:px-0">
+          <SlideUp
+            el="p"
+            className="text-foreground/80 text-xl lg:text-3xl leading-relaxed"
+            text={project.description}
+          />
         </div>
       </div>
 
       <div className="bg-[#F2EEE7] dark:bg-[#1a1a1a]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 py-32 px-4 lg:px-0">
-          {carouselImages.slice(1, 4).map((src, i) => (
+        <div
+          ref={gridContainerRef}
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 py-20 xl:py-32 px-4 lg:px-8 xl:px-0"
+        >
+          {imageUrls.slice(1, 4).map((src, i) => (
             <div key={i} className="relative w-full aspect-[9/16]">
               <Image
+                ref={(el) => {
+                  gridImagesRef.current[i] = el;
+                }}
                 src={src}
                 alt={`Mobile Preview ${i + 2}`}
                 fill
@@ -120,6 +177,23 @@ export function ProjectDetailSection({ slug }: { slug: string }) {
             </div>
           ))}
         </div>
+      </div>
+
+      <div
+        ref={videoContainerRef}
+        className="relative w-full h-[30dvh] md:h-[50dvh] xl:h-[100dvh] overflow-hidden"
+      >
+        {videoUrl && (
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            className="absolute top-0 left-0 w-full h-[100%] object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        )}
       </div>
     </div>
   );

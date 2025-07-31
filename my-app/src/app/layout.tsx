@@ -39,6 +39,7 @@ export default function RootLayout({
           <Header />
           <LenisScroller />
           {children}
+  
         </ThemeProvider>
       </body>
     </html>

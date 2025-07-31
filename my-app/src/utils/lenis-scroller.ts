@@ -6,7 +6,7 @@ import Lenis from "@studio-freight/lenis";
 export function LenisScroller() {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.03,
+      lerp: 0.06,
       // lerp: 0.1,
     });
 
