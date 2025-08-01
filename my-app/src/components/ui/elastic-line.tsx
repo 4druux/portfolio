@@ -13,10 +13,10 @@ export function ElasticLine() {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="w-full h-12 cursor-pointer"
+      className="w-full h-40 cursor-pointer"
     >
       <svg
-        viewBox="0 0 100 100"
+        viewBox="0 -50 100 200"
         preserveAspectRatio="none"
         width="100%"
         height="100%"

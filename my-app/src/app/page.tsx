@@ -8,12 +8,12 @@ import Footer from "@/components/footer";
 export default function page() {
   return (
     <PageTransitionCurve>
-      <main className="min-h-screen bg-background">
+      <main className="bg-background">
         <HeroSection />
         <AboutSection />
         <ProjectSection />
-        <Footer />
       </main>
+      <Footer />
     </PageTransitionCurve>
   );
 }

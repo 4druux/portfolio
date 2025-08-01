@@ -5,19 +5,20 @@ import { motion, useAnimation } from "framer-motion";
 import { useMagnetic } from "@/hooks/use-magnetic";
 import { useTheme } from "next-themes";
 
-interface FooterMagneticProps {
+interface FooterIconProps {
   onClick: () => void;
   name?: string;
+  icon?: React.ReactNode;
   className?: string;
-  children?: React.ReactNode;
 }
 
-export function FooterMagnetic({
+export function FooterIcon({
   onClick,
   name,
-  children,
+  icon,
+
   className,
-}: FooterMagneticProps) {
+}: FooterIconProps) {
   const fillControls = useAnimation();
   const textControls = useAnimation();
   const { theme } = useTheme();
@@ -58,7 +59,7 @@ export function FooterMagnetic({
     textControls.start({
       scale: 1,
       color: getIdleColor(),
-      transition: { duration: 0.6, ease: "easeInOut" },
+      transition: { duration: 0.3, ease: "easeInOut" },
     });
   };
 
@@ -79,20 +80,18 @@ export function FooterMagnetic({
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
     >
-      {children && (
-        <motion.span
-          className="relative z-10 block"
-          style={{ x, y }}
-          animate={textControls}
-          initial={{ color: getIdleColor() }}
-        >
-          {children}
-        </motion.span>
-      )}
+      <motion.span
+        className="relative z-10 block"
+        style={{ x, y }}
+        animate={textControls}
+        initial={{ color: getIdleColor() }}
+      >
+        {icon}
+      </motion.span>
 
       <motion.div
         animate={fillControls}
-        className="absolute top-[-140%] left-[-25%] w-[150%] h-[650%] rounded-[100%] pointer-events-none z-0 translate-y-[80%] 
+        className="absolute top-[-30%] left-[-25%] w-[150%] h-[150%] rounded-[100%] pointer-events-none z-0 translate-y-[90%]
         bg-[#fefff5] dark:bg-[#1f2937]"
       />
     </motion.button>

@@ -11,15 +11,15 @@ export const useElasticLine = () => {
   const y = useMotionValue(0);
 
   const spring = {
-    stiffness: 60,  // Pegas lebih longgar dan lentur
-    damping: 8,     // Redaman sangat rendah untuk pantulan nyata
-    mass: 0.5,
+    stiffness: 150, // Sedikit lebih kaku agar 'snap' terasa
+    damping: 3, // Redaman lebih tinggi untuk pantulan yang terkontrol
+    mass: 1,
   };
   const smoothY = useSpring(y, spring);
 
   const path = useTransform(
     smoothY,
-    (val) => `M 0 50 Q 50 ${50 + val * 4} 100 50` // Tarikan mouse 4x lebih kuat
+    (val) => `M 0 50 Q 50 ${50 + val * 1.5} 100 50`
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
