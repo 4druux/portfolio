@@ -74,7 +74,7 @@ export default function PageTransitionCurve({
 
   return (
     <div
-      className={`page-transition-curve bg-neutral-900 dark:bg-neutral-100`}
+      className={`page-transition-curve bg-foreground`}
       style={{
         zIndex: isTransitioning ? 9999 : -1,
       }}
@@ -87,7 +87,7 @@ export default function PageTransitionCurve({
         className="page-transition-background"
       />
       <motion.div
-        className="page-transition-route text-neutral-100 dark:text-neutral-900"
+        className="page-transition-route text-background"
         {...animationProps(text)}
         style={{
           zIndex: isTransitioning ? 51 : -1,
@@ -144,7 +144,7 @@ const TransitionCurveSVG = ({
     >
       <motion.path
         {...animationProps(curve(initialPath, targetPath))}
-        className="fill-neutral-900 dark:fill-neutral-100"
+        className="fill-foreground"
       />
     </motion.svg>
   );

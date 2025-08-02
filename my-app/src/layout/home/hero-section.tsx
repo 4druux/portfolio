@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { ArrowDown, MousePointer2 } from "lucide-react";
 import { Badge } from "@/components/ui/bedge";
 import ShinyText from "@/components/text/shiny-text";
-import MagneticButton from "@/components/button/magnetic-button";
+import { ButtonMagnetic } from "@/components/ui/button";
 import { GradientButton } from "@/components/button/gradient-button";
-import { IconMagnetic } from "@/components/ui/icon-magnetic";
 import { socialLinks } from "@/data/social-media-data";
+import Link from "next/link";
 
 export function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -16,6 +16,22 @@ export function HeroSection() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const heroLinkNames = ["Github", "Linkedin", "Email"];
+  const filteredLinks = socialLinks.filter((link) =>
+    heroLinkNames.includes(link.name)
+  );
+
+  const MagneticButtonProps = {
+    iconOnly: true,
+    fillControlsProps: {
+      top: "top-[-32%]",
+      left: "left-[-25%]",
+      width: "w-[150%]",
+      height: "h-[150%]",
+      TranslateY: "translate-y-[90%]",
+    },
   };
 
   return (
@@ -50,12 +66,16 @@ export function HeroSection() {
           </motion.div>
 
           <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-8 justify-center w-full items-center mb-6 md:mb-12">
-            <MagneticButton
+            <ButtonMagnetic
               onClick={() => scrollToSection("contact")}
-              className="w-full md:w-1/3 lg:w-1/4 py-4 md:py-5"
+              padding="p-5"
+              className="w-full md:w-1/3 lg:w-1/4"
+              fillControlsProps={{
+                TranslateY: "translate-y-[40%]",
+              }}
             >
               Let&apos;s Connect
-            </MagneticButton>
+            </ButtonMagnetic>
 
             <GradientButton
               onClick={() => scrollToSection("projects-section")}
@@ -66,16 +86,18 @@ export function HeroSection() {
             </GradientButton>
           </motion.div>
 
-          <motion.div className="flex justify-center space-x-8 mb-12">
-            {socialLinks.map((social) => (
-              <IconMagnetic
-                key={social.name}
-                onClick={() =>
-                  window.open(social.link, "_blank", "noopener,noreferrer")
-                }
-                name={social.name}
-                icon={<social.icon className="w-6 h-6" />}
-              />
+          <motion.div className="flex justify-center space-x-6 mb-12">
+            {filteredLinks.map(({ name, url, Icon }) => (
+              <Link
+                key={name}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ButtonMagnetic padding="p-5" {...MagneticButtonProps}>
+                  <Icon className="w-6 h-6" />
+                </ButtonMagnetic>
+              </Link>
             ))}
           </motion.div>
 
@@ -90,11 +112,13 @@ export function HeroSection() {
           >
             <div className="flex flex-col items-center space-y-3">
               <span className="text-sm font-medium">Scroll to explore</span>
-              <IconMagnetic
+              <ButtonMagnetic
                 onClick={() => scrollToSection("about-section")}
-                icon={<ArrowDown className="w-5 h-5" />}
-                className="!p-3 rounded-full"
-              />
+                padding="p-3"
+                {...MagneticButtonProps}
+              >
+                <ArrowDown className="w-6 h-6" />
+              </ButtonMagnetic>
             </div>
           </motion.div>
         </div>

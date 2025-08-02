@@ -20,6 +20,7 @@ import mysql from "@/assets/logo/mysql.svg";
 
 // lanyard
 import lanyard from "@/assets/lanyard/lanyard.png";
+import profile from "@/assets/lanyard/profile.jpg";
 
 type ImageType = StaticImageData | string;
 export const getImageUrl = (image: ImageType): string => {
@@ -50,6 +51,7 @@ export const images: { [key: string]: ImageType } = {
 
   // lanyard
   lanyard,
+  profile,
 
   // project
   alltrailsDesktop:

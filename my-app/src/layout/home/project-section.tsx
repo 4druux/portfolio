@@ -4,9 +4,10 @@ import { projects } from "@/data/project-data";
 import { Badge } from "@/components/ui/bedge";
 import { ProjectDesktop } from "@/components/project/project-desktop";
 import { ProjectMobile } from "@/components/project/project-mobile";
-import MagneticButton from "@/components/button/magnetic-button";
 import { Sparkles } from "lucide-react";
 import { SlideUp } from "@/components/animated/slide-up";
+import { ButtonMagnetic } from "@/components/ui/button";
+import Link from "next/link";
 
 export function ProjectSection() {
   const projectsForDesktop = projects.slice(0, 5);
@@ -38,12 +39,14 @@ export function ProjectSection() {
       </div>
 
       <div className="flex justify-center py-10 xl:py-24">
-        <MagneticButton href="/projects" className="px-8 md:px-12">
-          <div className="flex items-start font-light text-sm gap-2">
-            <span className="mt-1"> All Projects</span>
-            <span>{projects.length}</span>
-          </div>
-        </MagneticButton>
+        <Link href="/projects" aria-label="Lihat semua proyek">
+          <ButtonMagnetic padding="py-5 px-8 md:px-12">
+            <div className="flex items-start font-light text-sm gap-2">
+              <div className="mt-1"> All Projects</div>
+              <div>{projects.length}</div>
+            </div>
+          </ButtonMagnetic>
+        </Link>
       </div>
     </div>
   );
