@@ -3,7 +3,7 @@
 "use client";
 
 import { useState } from "react";
-import { projects } from "@/data/project-home";
+import { projects } from "@/data/project-data";
 import { Badge } from "@/components/ui/bedge";
 import { ProjectDesktop } from "@/components/project/project-desktop";
 import { ProjectMobile } from "@/components/project/project-mobile";

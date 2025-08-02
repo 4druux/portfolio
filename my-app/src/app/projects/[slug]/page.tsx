@@ -1,6 +1,7 @@
 import PageTransitionCurve from "@/components/curve";
 import Footer from "@/components/footer";
-import { projects } from "@/data/project-home";
+import Sliding from "@/components/ui/sliding";
+import { projects } from "@/data/project-data";
 import { ProjectDetailSection } from "@/layout/project/project-detail-section";
 
 export async function generateStaticParams() {
@@ -18,8 +19,9 @@ export default function ProjectDetailPage({
     <PageTransitionCurve>
       <main className="min-h-screen bg-background">
         <ProjectDetailSection slug={params.slug} />
+        <Sliding />
+        <Footer />
       </main>
-      <Footer />
     </PageTransitionCurve>
   );
 }

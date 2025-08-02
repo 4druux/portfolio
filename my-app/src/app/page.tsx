@@ -4,6 +4,7 @@ import { HeroSection } from "@/layout/home/hero-section";
 import { AboutSection } from "@/layout/home/about-section";
 import { ProjectSection } from "@/layout/home/project-section";
 import Footer from "@/components/footer";
+import Sliding from "@/components/ui/sliding";
 
 export default function page() {
   return (
@@ -12,8 +13,9 @@ export default function page() {
         <HeroSection />
         <AboutSection />
         <ProjectSection />
+        <Sliding />
+        <Footer />
       </main>
-      <Footer />
     </PageTransitionCurve>
   );
 }

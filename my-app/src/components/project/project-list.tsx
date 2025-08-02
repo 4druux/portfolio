@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { Project } from "@/data/project-home";
+import { Project } from "@/data/project-data";
 import { ProjectItem } from "./project-item";
 
 interface ProjectListProps {

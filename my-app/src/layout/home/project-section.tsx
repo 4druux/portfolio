@@ -1,6 +1,6 @@
 "use client";
 
-import { projects } from "@/data/project-home";
+import { projects } from "@/data/project-data";
 import { Badge } from "@/components/ui/bedge";
 import { ProjectDesktop } from "@/components/project/project-desktop";
 import { ProjectMobile } from "@/components/project/project-mobile";
@@ -37,7 +37,7 @@ export function ProjectSection() {
         <ProjectMobile projects={projectsForMobile} />
       </div>
 
-      <div className="flex justify-center mt-8 md:mt-0">
+      <div className="flex justify-center py-10 xl:py-24">
         <MagneticButton href="/projects" className="px-8 md:px-12">
           <div className="flex items-start font-light text-sm gap-2">
             <span className="mt-1"> All Projects</span>

@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { FooterMagnetic } from "./button/footer-button";
-import { ArrowDown, Instagram } from "lucide-react";
 import Image from "next/image";
 import { getImageUrl, images } from "@/assets";
 import gsap from "gsap";
@@ -10,11 +9,35 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ElasticLine } from "./ui/elastic-line";
 import { FooterIcon } from "./button/footer-icon";
 import { GetInTouchMagnetic } from "./button/get-in-touch-button";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useTheme } from "next-themes";
+import { FiGithub, FiInstagram, FiLinkedin } from "react-icons/fi";
+import { FaUpwork } from "react-icons/fa6";
 
 export default function Footer() {
   const footerRef = useRef(null);
   const touchButtonRef = useRef(null);
-  const arrowIconRef = useRef(null);
+  const { theme } = useTheme();
+
+  const getZoneTime = () => {
+    return new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Jakarta",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).format(new Date());
+  };
+
+  const [time, setTime] = useState(getZoneTime);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime(getZoneTime());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -30,20 +53,10 @@ export default function Footer() {
       gsap.fromTo(
         touchButtonRef.current,
         {
-          xPercent: -500,
+          xPercent: -400,
         },
         {
-          xPercent: 0,
-          ease: "none",
-          scrollTrigger: scrollTriggerConfig,
-        }
-      );
-
-      gsap.fromTo(
-        arrowIconRef.current,
-        { rotate: 180 },
-        {
-          rotate: 20,
+          xPercent: 250,
           ease: "none",
           scrollTrigger: scrollTriggerConfig,
         }
@@ -52,15 +65,23 @@ export default function Footer() {
     return () => ctx.revert();
   }, []);
 
+  const { scrollYProgress } = useScroll({
+    target: footerRef,
+    offset: ["start end", "end end"],
+  });
+
+  const rotate = useTransform(scrollYProgress, [0, 1], [180, 90]);
+
   return (
     <div
+      ref={footerRef}
       className="relative h-[100dvh]"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className="relative h-[calc(100vh+100dvh)] -top-[100vh]">
         <div className="h-[100dvh] sticky top-[calc(100vh-100dvh)]">
           <div className="bg-[#1f1f1f] dark:bg-[#fafafa] text-[#fefff5] dark:text-[#1f2937] h-full w-full">
-            <div className="max-w-7xl mx-auto flex flex-col justify-between h-full pt-24 pb-10 px-4">
+            <div className="max-w-7xl mx-auto flex flex-col justify-between h-full py-24 px-4">
               <div>
                 <div className="inline-flex items-center gap-2 md:gap-6">
                   <Image
@@ -80,9 +101,19 @@ export default function Footer() {
                   <h3 className="text-5xl md:text-8xl leading-tight">
                     Together
                   </h3>
-                  <div ref={arrowIconRef}>
-                    <ArrowDown className="w-9 h-9" />
-                  </div>
+                  <motion.svg
+                    style={{ rotate, scale: 2 }}
+                    width="9"
+                    height="9"
+                    viewBox="0 0 9 9"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 8.5C8.27614 8.5 8.5 8.27614 8.5 8L8.5 3.5C8.5 3.22386 8.27614 3 8 3C7.72386 3 7.5 3.22386 7.5 3.5V7.5H3.5C3.22386 7.5 3 7.72386 3 8C3 8.27614 3.22386 8.5 3.5 8.5L8 8.5ZM0.646447 1.35355L7.64645 8.35355L8.35355 7.64645L1.35355 0.646447L0.646447 1.35355Z"
+                      fill={theme === "dark" ? "#1f2937" : "#fefff5"}
+                    />
+                  </motion.svg>
                 </div>
 
                 <div className="mt-8 md:mt-20 relative flex items-center">
@@ -128,11 +159,11 @@ export default function Footer() {
                 <div className="flex gap-10">
                   <div className="flex flex-col gap-2">
                     <h3>Version</h3>
-                    <p>1.0.0 2025 &copy; Edition</p>
+                    <p>1.0 &copy; Edition 2025</p>
                   </div>
                   <div className="flex flex-col gap-2">
                     <h3>Time & Location</h3>
-                    <p>1.0.0 2025 &copy; Edition</p>
+                    <p>{time} Jakarta, ID</p>
                   </div>
                 </div>
 
@@ -142,23 +173,23 @@ export default function Footer() {
                     <FooterIcon
                       onClick={() => window.open("https://wa.me/6287708559045")}
                       className="!p-3"
-                      icon={<Instagram className="w-5 h-5" />}
+                      icon={<FiInstagram className="w-5 h-5" />}
                     />
 
                     <FooterIcon
                       onClick={() => window.open("https://wa.me/6287708559045")}
                       className="!p-3"
-                      icon={<Instagram className="w-5 h-5" />}
+                      icon={<FiGithub className="w-5 h-5" />}
                     />
                     <FooterIcon
                       onClick={() => window.open("https://wa.me/6287708559045")}
                       className="!p-3"
-                      icon={<Instagram className="w-5 h-5" />}
+                      icon={<FiLinkedin className="w-5 h-5" />}
                     />
                     <FooterIcon
                       onClick={() => window.open("https://wa.me/6287708559045")}
                       className="!p-3"
-                      icon={<Instagram className="w-5 h-5" />}
+                      icon={<FaUpwork className="w-5 h-5" />}
                     />
                   </div>
                 </div>

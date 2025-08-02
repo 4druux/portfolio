@@ -11,7 +11,7 @@ import {
   type Transition,
 } from "framer-motion";
 import Image from "next/image";
-import { Project } from "@/data/project-home";
+import { Project } from "@/data/project-data";
 import { useCursorFollow } from "@/hooks/use-cursor-follow";
 import Link from "next/link";
 import { CursorFollow } from "../ui/cursor-follow";

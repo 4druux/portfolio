@@ -1,6 +1,6 @@
 "use client";
 
-import { projects } from "@/data/project-home";
+import { projects } from "@/data/project-data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
@@ -194,6 +194,16 @@ export function ProjectDetailSection({ slug }: { slug: string }) {
             playsInline
           />
         )}
+      </div>
+
+      <div className="bg-background">
+        <div className="flex flex-col justify-center items-start max-w-7xl mx-auto py-20 xl:py-32 px-4 lg:px-0">
+          <SlideUp
+            el="p"
+            className="text-foreground/80 text-xl lg:text-3xl leading-relaxed"
+            text={project.description}
+          />
+        </div>
       </div>
     </div>
   );

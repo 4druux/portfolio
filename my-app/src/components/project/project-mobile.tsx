@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { Project } from "@/data/project-home";
+import { Project } from "@/data/project-data";
 import { SlideUp } from "../animated/slide-up";
 import { motion } from "framer-motion";
 
